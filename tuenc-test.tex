@@ -5,28 +5,8 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage{multicol}
 
-\usepackage{expl3,xparse,unravel}
-\ExplSyntaxOn
-
-\sys_if_engine_xetex:T
-  {
-    \tl_set:Nn \__c_fontload_texligatures_tl { mapping = tex-text; }
-  }
-
-\sys_if_engine_luatex:T
-  {
-    \usepackage{luaotfload}
-    \tl_set:Nn \__c_fontload_texligatures_tl { +tlig; +trep; }
-  }
-
-\cs_set_nopar:Npn \__fontload_file:nn #1 #2 { "[#1]:#2" }
-\cs_set_nopar:Npn \__fontload_name:nn #1 #2 { "#1:#2" }
-
-\cs_set_eq:NN \UnicodeFontFile \__fontload_file:nn
-\cs_set:Npn \UnicodeFontTeXLigatures {\__c_fontload_texligatures_tl;color=000099}
-
-\ExplSyntaxOff
-
+\usepackage{expl3,xparse,unravel,ifluatex}
+\ifluatex\usepackage{luaotfload}\fi
 \usepackage[T1,TU]{fontenc}
 \usepackage{lmodern}
 
@@ -43,7 +23,7 @@ hello firefly
 \TEST{\'e}
 \TEST{\c G}
 
-\c{s} 
+\" \i\ = \i\char "0308\relax\ $\neq$ \char"00EF\relax
 \c G = G\char "0327\relax\ = Ģ
 \b A = A\char "0332\relax\ = A̲
 

@@ -7,12 +7,45 @@
 
 \g@addto@macro\nfss@catcodes{\@makeother:}
 
-\def\fontload@unicode@accent#1#2{#2\char#1\relax}
-\def\DeclareUnicodeAccent#1#2{%
-  \DeclareTextCommand{#1}{TU}{\fontload@unicode@accent{#2}}%
-}
+\ExplSyntaxOn
 
-%% T1 LICRs
+%% FONT LOADING (.fd FILE COMMANDS)
+
+\sys_if_engine_xetex:T
+  {
+    \tl_set:Nn \__c_fontload_texligatures_tl { mapping = tex-text; }
+  }
+
+\sys_if_engine_luatex:T
+  {
+    \tl_set:Nn \__c_fontload_texligatures_tl { +tlig; +trep; }
+  }
+
+\cs_set_nopar:Npn \__fontload_file:nn #1 #2 { "[#1]:#2" }
+\cs_set_nopar:Npn \__fontload_name:nn #1 #2 { "#1:#2" }
+
+%% COMMANDS FOR SYMBOL DEFINITIONS (used below)
+
+\cs_set_nopar:Npn \_fontload_unicode_accent:nn #1 #2
+  { #2 \char #1 \relax }
+
+\cs_set_nopar:Npn \_declare_unicode_accent:nn #1 #2
+  {
+    \DeclareTextCommand {#1} {TU}
+      { \_fontload_unicode_accent:nn {#2} }
+  }
+
+%% User-layer command names
+
+\cs_set_eq:NN \UnicodeFontFile \__fontload_file:nn
+\cs_set:Npn   \UnicodeFontTeXLigatures
+  { \__c_fontload_texligatures_tl; color=000099; }
+\cs_set_eq:NN \DeclareUnicodeAccent \_declare_unicode_accent:nn
+
+\ExplSyntaxOff
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% T1 SYMBOLS
 
 \DeclareUnicodeAccent{\`}{"0300}
 \DeclareUnicodeAccent{\'}{"0301}
@@ -39,7 +72,7 @@
 \DeclareTextSymbol{\NG}{TU}{"014A}
 \DeclareTextSymbol{\OE}{TU}{"0152}
 \DeclareTextSymbol{\O} {TU}{"00D8}
-%\DeclareTextSymbol{\SS}{TU}{223}
+%% \DeclareTextSymbol{\SS}{TU}{223}
 \DeclareTextSymbol{\TH}{TU}{"00DE}
 \DeclareTextSymbol{\ae}{TU}{"00E6}
 \DeclareTextSymbol{\dh}{TU}{"00F0}
@@ -83,21 +116,15 @@
 \DeclareTextSymbol{\textunderscore}{TU}{`\_}
 \DeclareTextSymbol{\textvisiblespace}{TU}{"2423}
 \DeclareTextSymbol{\th}{TU}{"00FE}
-
 \DeclareTextComposite{\.}{TU}{i}{`\i}
 \DeclareTextComposite{\.}{TU}{\i}{`\i}
 \DeclareTextComposite{\u}{TU}{A}{"0102}
 \DeclareTextComposite{\k}{TU}{A}{"0104}
-
 \DeclareTextComposite{\'}{TU}{C}{"0106}
 \DeclareTextComposite{\v}{TU}{C}{"010C}
 \DeclareTextComposite{\v}{TU}{D}{"010E}
-
 \DeclareTextComposite{\v}{TU}{E}{"011A}
 \DeclareTextComposite{\k}{TU}{E}{"0118}
-
-\endinput
-
 \DeclareTextComposite{\u}{TU}{G}{"011E}
 \DeclareTextComposite{\'}{TU}{L}{"0139}
 \DeclareTextComposite{\v}{TU}{L}{"013D}
@@ -118,7 +145,6 @@
 \DeclareTextComposite{\v}{TU}{Z}{"017D}
 \DeclareTextComposite{\.}{TU}{Z}{"017B}
 \DeclareTextComposite{\.}{TU}{I}{"0130}
-
 \DeclareTextComposite{\u}{TU}{a}{"0103}
 \DeclareTextComposite{\k}{TU}{a}{"0105}
 \DeclareTextComposite{\'}{TU}{c}{"0107}
@@ -180,7 +206,7 @@
 \DeclareTextComposite{\c}{TU}{c}{"00E7}
 \DeclareTextComposite{\`}{TU}{e}{"00E8}
 \DeclareTextComposite{\'}{TU}{e}{"00E9}
-\DeclareTextCompositeCommand{\^}{TU}{e}{"00EA}
+\DeclareTextComposite{\^}{TU}{e}{"00EA}
 \DeclareTextComposite{\"}{TU}{e}{"00EB}
 \DeclareTextComposite{\`}{TU}{i}{"00EC}
 \DeclareTextComposite{\`}{TU}{\i}{"00EC}
@@ -204,8 +230,11 @@
 \DeclareTextComposite{\k}{TU}{o}{"01EB}
 \DeclareTextComposite{\k}{TU}{O}{"01EA}
 
+
 \endinput
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TS1 symbols
 
 \DeclareTextCommand{\capitalcedilla}{TS1}[1]
    {\hmode@bgroup
