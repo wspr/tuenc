@@ -1,0 +1,239 @@
+%!TEX TS-program = XeLaTeX
+
+\documentclass{article}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{multicol}
+
+\usepackage{expl3,xparse,unravel}
+\ExplSyntaxOn
+
+\sys_if_engine_xetex:T
+  {
+    \tl_set:Nn \__c_fontload_texligatures_tl { mapping = tex-text; }
+  }
+
+\sys_if_engine_luatex:T
+  {
+    \usepackage{luaotfload}
+    \tl_set:Nn \__c_fontload_texligatures_tl { +tlig; +trep; }
+  }
+
+\cs_set_nopar:Npn \__fontload_file:nn #1 #2 { "[#1]:#2" }
+\cs_set_nopar:Npn \__fontload_name:nn #1 #2 { "#1:#2" }
+
+\cs_set_eq:NN \UnicodeFontFile \__fontload_file:nn
+\cs_set:Npn \UnicodeFontTeXLigatures {\__c_fontload_texligatures_tl;color=000099}
+
+\ExplSyntaxOff
+
+\usepackage[T1,TU]{fontenc}
+\usepackage{lmodern}
+
+\begin{document}
+
+hello firefly
+
+\def\TEST#1{\texttt{\detokenize{#1}}: `{\fontencoding{T1}\selectfont#1}' / `{\fontencoding{TU}\selectfont#1}'}
+\parindent=0pt\relax
+\raggedright
+\obeylines
+
+\TEST{\textdagger}
+\TEST{\'e}
+\TEST{\c G}
+
+\c{s} 
+\c G = G\char "0327\relax\ = Ģ
+\b A = A\char "0332\relax\ = A̲
+
+
+\section{T1 encoding}
+
+\begin{multicols}{3}
+\TEST{\`a \`A}
+\TEST{\'a \'A}
+\TEST{\^a \^A}
+\TEST{\~a \~A}
+\TEST{\"a \"A}
+\TEST{\H a \H A}
+\TEST{\r a \r A}
+\TEST{\v a \v A}
+\TEST{\u a \u A}
+\TEST{\=a  \=A}
+\TEST{\.a  \.A}
+\TEST{\b a \b A}
+\TEST{\c a \c A}
+\TEST{\d a \d A}
+\TEST{\k a \k A}
+%\TEST{\textogonekcentered a \textogonekcentered A}
+\TEST{\textperthousand}
+\TEST{\textpertenthousand}
+\TEST{\AE}
+\TEST{\DH}
+\TEST{\DJ}
+\TEST{\L}
+\TEST{\NG}
+\TEST{\OE}
+\TEST{\O}
+\TEST{\SS}
+\TEST{\TH}
+\TEST{\ae}
+\TEST{\dh}
+\TEST{\dj}
+\TEST{\guillemotleft}
+\TEST{\guillemotright}
+\TEST{\guilsinglleft}
+\TEST{\guilsinglright}
+\TEST{\i}
+\TEST{\j}
+\TEST{\ij}
+\TEST{\IJ}
+\TEST{\l}
+\TEST{\ng}
+\TEST{\oe}
+\TEST{\o}
+\TEST{\quotedblbase}
+\TEST{\quotesinglbase}
+\TEST{\ss}
+\TEST{\textasciicircum}
+\TEST{\textasciitilde}
+\TEST{\textbackslash}
+\TEST{\textbar}
+\TEST{\textbraceleft}
+\TEST{\textbraceright}
+\TEST{\textcompwordmark}
+\TEST{\textdollar}
+\TEST{\textemdash}
+\TEST{\textendash}
+\TEST{\textexclamdown}
+\TEST{\textgreater}
+\TEST{\textless}
+\TEST{\textquestiondown}
+\TEST{\textquotedblleft}
+\TEST{\textquotedblright}
+\TEST{\textquotedbl}
+\TEST{\textquoteleft}
+\TEST{\textquoteright}
+\TEST{\textsection}
+\TEST{\textsterling}
+\TEST{\textunderscore}
+\TEST{\textvisiblespace}
+\TEST{\th}
+\TEST{\. i}
+\TEST{\. \i}
+\TEST{\u A}
+\TEST{\k A}
+\TEST{\' C}
+\TEST{\v C}
+\TEST{\v D}
+\TEST{\v E}
+\TEST{\k E}
+\TEST{\u G}
+\TEST{\' L}
+\TEST{\v L}
+\TEST{\' N}
+\TEST{\v N}
+\TEST{\H O}
+\TEST{\' R}
+\TEST{\v R}
+\TEST{\' S}
+\TEST{\v S}
+\TEST{\c S}
+\TEST{\v T}
+\TEST{\c T}
+\TEST{\H U}
+\TEST{\r U}
+\TEST{\" Y}
+\TEST{\' Z}
+\TEST{\v Z}
+\TEST{\. Z}
+\TEST{\. I}
+\TEST{\u a}
+\TEST{\k a}
+\TEST{\' c}
+\TEST{\v c}
+\TEST{\v d}
+\TEST{\v e}
+\TEST{\k e}
+\TEST{\u g}
+\TEST{\' l}
+\TEST{\v l}
+\TEST{\' n}
+\TEST{\v n}
+\TEST{\H o}
+\TEST{\' r}
+\TEST{\v r}
+\TEST{\' s}
+\TEST{\v s}
+\TEST{\c s}
+\TEST{\v t}
+\TEST{\c t}
+\TEST{\H u}
+\TEST{\r u}
+\TEST{\" y}
+\TEST{\' z}
+\TEST{\v z}
+\TEST{\. z}
+\TEST{\` A}
+\TEST{\' A}
+\TEST{\^ A}
+\TEST{\~ A}
+\TEST{\" A}
+\TEST{\r A}
+\TEST{\c C}
+\TEST{\` E}
+\TEST{\' E}
+\TEST{\^ E}
+\TEST{\" E}
+\TEST{\` I}
+\TEST{\' I}
+\TEST{\^ I}
+\TEST{\" I}
+\TEST{\~ N}
+\TEST{\` O}
+\TEST{\' O}
+\TEST{\^ O}
+\TEST{\~ O}
+\TEST{\" O}
+\TEST{\` U}
+\TEST{\' U}
+\TEST{\^ U}
+\TEST{\" U}
+\TEST{\' Y}
+\TEST{\` a}
+\TEST{\' a}
+\TEST{\^ a}
+\TEST{\~ a}
+\TEST{\" a}
+\TEST{\r a}
+\TEST{\c c}
+\TEST{\` e}
+\TEST{\' e}
+\TEST{\^ e}
+\TEST{\" e}
+\TEST{\` i}
+\TEST{\` \i}
+\TEST{\' i}
+\TEST{\' \i}
+\TEST{\^ i}
+\TEST{\^ \i}
+\TEST{\" i}
+\TEST{\" \i}
+\TEST{\~ n}
+\TEST{\` o}
+\TEST{\' o}
+\TEST{\^ o}
+\TEST{\~ o}
+\TEST{\" o}
+\TEST{\` u}
+\TEST{\' u}
+\TEST{\^ u}
+\TEST{\" u}
+\TEST{\' y}
+\TEST{\k o}
+\TEST{\k O}
+
+\end{multicols}
+
+\end{document}
