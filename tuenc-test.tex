@@ -8,27 +8,27 @@
 \usepackage{expl3,xparse,unravel,ifluatex}
 \ifluatex\usepackage{luaotfload}\fi
 \usepackage[T1,TU]{fontenc}
-\usepackage{lmodern}
+\usepackage{textcomp,lmodern}
 
 \begin{document}
 
 hello firefly
 
-\def\TEST#1{\texttt{\detokenize{#1}}: `{\fontencoding{T1}\selectfont#1}' / `{\fontencoding{TU}\selectfont#1}'}
+\def\TEST#1{\texttt{\detokenize{#1}}: `{\fontencoding{T1}\selectfont#1}' / `{\fontencoding{TU}\selectfont#1}'\par}
 \parindent=0pt\relax
 \raggedright
-\obeylines
 
 \TEST{\textdagger}
 \TEST{\'e}
 \TEST{\c G}
 
 \" \i\ = \i\char "0308\relax\ $\neq$ \char"00EF\relax
+
 \c G = G\char "0327\relax\ = Ģ
+
 \b A = A\char "0332\relax\ = A̲
 
-
-\section{T1 encoding}
+\section{T1}
 
 \begin{multicols}{3}
 \TEST{\`a \`A}
@@ -213,6 +213,141 @@ hello firefly
 \TEST{\' y}
 \TEST{\k o}
 \TEST{\k O}
+
+\end{multicols}
+
+\section*{TS1}
+
+\begin{multicols}{3}
+
+\TEST{\capitalcedilla Q}
+\TEST{\capitalogonek Q}
+\TEST{\capitalgrave Q}
+\TEST{\capitalacute Q}
+\TEST{\capitalcircumflex Q}
+\TEST{\capitaltilde Q}
+\TEST{\capitaldieresis Q}
+\TEST{\capitalhungarumlaut Q}
+\TEST{\capitalring Q}
+\TEST{\capitalcaron Q}
+\TEST{\capitalbreve Q}
+\TEST{\capitalmacron Q}
+\TEST{\capitaldotaccent Q}
+\TEST{\t qq}
+\TEST{\capitaltie QQ}
+\TEST{\newtie qq}
+\TEST{\capitalnewtie QQ}
+
+\TEST{\textcapitalcompwordmark}
+\TEST{\textascendercompwordmark}
+\TEST{\textquotestraightbase}
+\TEST{\textquotestraightdblbase}
+\TEST{\texttwelveudash}
+\TEST{\textthreequartersemdash}
+\TEST{\textleftarrow}
+\TEST{\textrightarrow}
+\TEST{\textblank}
+\TEST{\textdollar}
+\TEST{\textquotesingle}
+\TEST{\textasteriskcentered}
+\TEST{\textdblhyphen}
+\TEST{\textfractionsolidus}
+\TEST{\textzerooldstyle}
+\TEST{\textoneoldstyle}
+\TEST{\texttwooldstyle}
+\TEST{\textthreeoldstyle}
+\TEST{\textfouroldstyle}
+\TEST{\textfiveoldstyle}
+\TEST{\textsixoldstyle}
+\TEST{\textsevenoldstyle}
+\TEST{\texteightoldstyle}
+\TEST{\textnineoldstyle}
+\TEST{\textlangle}
+\TEST{\textminus}
+\TEST{\textrangle}
+\TEST{\textmho}
+\TEST{\textbigcircle}
+\TEST{\textcircled{e}}
+\TEST{\textohm}
+\TEST{\textlbrackdbl}
+\TEST{\textrbrackdbl}
+\TEST{\textuparrow}
+\TEST{\textdownarrow}
+\TEST{\textasciigrave}
+\TEST{\textborn}
+\TEST{\textdivorced}
+\TEST{\textdied}
+\TEST{\textleaf}
+\TEST{\textmarried}
+\TEST{\textmusicalnote}
+\TEST{\texttildelow}
+\TEST{\textdblhyphenchar}
+\TEST{\textasciibreve}
+\TEST{\textasciicaron}
+\TEST{\textacutedbl}
+\TEST{\textgravedbl}
+\TEST{\textdagger}
+\TEST{\textdaggerdbl}
+\TEST{\textbardbl}
+\TEST{\textperthousand}
+\TEST{\textbullet}
+\TEST{\textcelsius}
+\TEST{\textdollaroldstyle}
+\TEST{\textcentoldstyle}
+\TEST{\textflorin}
+\TEST{\textcolonmonetary}
+\TEST{\textwon}
+\TEST{\textnaira}
+\TEST{\textguarani}
+\TEST{\textpeso}
+\TEST{\textlira}
+\TEST{\textrecipe}
+\TEST{\textinterrobang}
+\TEST{\textinterrobangdown}
+\TEST{\textdong}
+\TEST{\texttrademark}
+\TEST{\textpertenthousand}
+\TEST{\textpilcrow}
+\TEST{\textbaht}
+\TEST{\textnumero}
+\TEST{\textdiscount}
+\TEST{\textestimated}
+\TEST{\textopenbullet}
+\TEST{\textservicemark}
+\TEST{\textlquill}
+\TEST{\textrquill}
+\TEST{\textcent}
+\TEST{\textsterling}
+\TEST{\textcurrency}
+\TEST{\textyen}
+\TEST{\textbrokenbar}
+\TEST{\textsection}
+\TEST{\textasciidieresis}
+\TEST{\textcopyright}
+\TEST{\textordfeminine}
+\TEST{\textcopyleft}
+\TEST{\textlnot}
+\TEST{\textcircledP}
+\TEST{\textregistered}
+\TEST{\textasciimacron}
+\TEST{\textdegree}
+\TEST{\textpm}
+\TEST{\texttwosuperior}
+\TEST{\textthreesuperior}
+\TEST{\textasciiacute}
+\TEST{\textmu}
+\TEST{\textparagraph}
+\TEST{\textperiodcentered}
+\TEST{\textreferencemark}
+\TEST{\textonesuperior}
+\TEST{\textordmasculine}
+\TEST{\textsurd}
+\TEST{\textonequarter}
+\TEST{\textonehalf}
+\TEST{\textthreequarters}
+\TEST{\texteuro}
+\TEST{\texttimes}
+\TEST{\textdiv}
 
 \end{multicols}
 
