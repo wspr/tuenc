@@ -72,7 +72,7 @@
 \DeclareTextSymbol{\NG}{TU}{"014A}
 \DeclareTextSymbol{\OE}{TU}{"0152}
 \DeclareTextSymbol{\O} {TU}{"00D8}
-%% \DeclareTextSymbol{\SS}{TU}{223}
+\DeclareTextSymbol{\SS}{TU}{"1E9E}
 \DeclareTextSymbol{\TH}{TU}{"00DE}
 \DeclareTextSymbol{\ae}{TU}{"00E6}
 \DeclareTextSymbol{\dh}{TU}{"00F0}
@@ -327,7 +327,7 @@
 \DeclareTextSymbol{\textlira}{TU}{"20A4}
 \DeclareTextSymbol{\textrecipe}{TU}{"211E}
 \DeclareTextSymbol{\textinterrobang}{TU}{"203D}
-%% \DeclareTextSymbol{\textinterrobangdown}{TU}{149} %% could fake this one?
+\DeclareTextSymbol{\textinterrobangdown}{TU}{"2E18}
 \DeclareTextSymbol{\textdong}{TU}{"20AB}
 \DeclareTextSymbol{\texttrademark}{TU}{"2122}
 \DeclareTextSymbol{\textpertenthousand}{TU}{"2031}
