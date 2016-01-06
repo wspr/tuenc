@@ -208,13 +208,13 @@
 \DeclareTextComposite{\'}{TU}{e}{"00E9}
 \DeclareTextComposite{\^}{TU}{e}{"00EA}
 \DeclareTextComposite{\"}{TU}{e}{"00EB}
-\DeclareTextComposite{\`}{TU}{i}{"00EC}
+\DeclareTextComposite{\`}{TU}{i} {"00EC}
 \DeclareTextComposite{\`}{TU}{\i}{"00EC}
-\DeclareTextComposite{\'}{TU}{i}{"00ED}
+\DeclareTextComposite{\'}{TU}{i} {"00ED}
 \DeclareTextComposite{\'}{TU}{\i}{"00ED}
-\DeclareTextComposite{\^}{TU}{i}{"00EE}
+\DeclareTextComposite{\^}{TU}{i} {"00EE}
 \DeclareTextComposite{\^}{TU}{\i}{"00EE}
-\DeclareTextComposite{\"}{TU}{i}{"00EF}
+\DeclareTextComposite{\"}{TU}{i} {"00EF}
 \DeclareTextComposite{\"}{TU}{\i}{"00EF}
 \DeclareTextComposite{\~}{TU}{n}{"00F1}
 \DeclareTextComposite{\`}{TU}{o}{"00F2}
@@ -229,6 +229,17 @@
 \DeclareTextComposite{\'}{TU}{y}{"00FD}
 \DeclareTextComposite{\k}{TU}{o}{"01EB}
 \DeclareTextComposite{\k}{TU}{O}{"01EA}
+
+\DeclareTextComposite{\c}{TU}{G}{"0122}
+\DeclareTextComposite{\c}{TU}{g}{"0123} % note this cedilla is above not below :)
+\DeclareTextComposite{\c}{TU}{K}{"0136}
+\DeclareTextComposite{\c}{TU}{k}{"0137}
+\DeclareTextComposite{\c}{TU}{L}{"013B}
+\DeclareTextComposite{\c}{TU}{l}{"013C}
+\DeclareTextComposite{\c}{TU}{N}{"0145}
+\DeclareTextComposite{\c}{TU}{n}{"0146}
+\DeclareTextComposite{\c}{TU}{R}{"0156}
+\DeclareTextComposite{\c}{TU}{r}{"0157}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
