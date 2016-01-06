@@ -26,13 +26,13 @@
 
 %% COMMANDS FOR SYMBOL DEFINITIONS (used below)
 
-\cs_set_nopar:Npn \_fontload_unicode_accent:nn #1 #2
+\cs_set_nopar:Npn \__fontload_unicode_accent:nn #1 #2
   { #2 \char #1 \relax }
 
-\cs_set_nopar:Npn \_declare_unicode_accent:nn #1 #2
+\cs_set_nopar:Npn \__declare_unicode_accent:nn #1 #2
   {
     \DeclareTextCommand {#1} {TU}
-      { \_fontload_unicode_accent:nn {#2} }
+      { \__fontload_unicode_accent:nn {#2} }
   }
 
 %% User-layer command names
@@ -40,7 +40,7 @@
 \cs_set_eq:NN \UnicodeFontFile \__fontload_file:nn
 \cs_set:Npn   \UnicodeFontTeXLigatures
   { \__c_fontload_texligatures_tl; color=000099; }
-\cs_set_eq:NN \DeclareUnicodeAccent \_declare_unicode_accent:nn
+\cs_set_eq:NN \DeclareUnicodeAccent \__declare_unicode_accent:nn
 
 \ExplSyntaxOff
 
