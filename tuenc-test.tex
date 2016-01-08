@@ -10,6 +10,29 @@
 \usepackage[T1,TU]{fontenc}
 \usepackage{textcomp,lmodern}
 
+\newenvironment{NewUnicodeEncoding}[1]{%
+  \let\OldUnicodeEncodingName\UnicodeEncodingName
+  \def\UnicodeEncodingName{#1}
+  \input{tuenc.def}
+  \DeclareFontFamily{\UnicodeEncodingName}{lmr}{}
+  \DeclareFontShape{\UnicodeEncodingName}{lmr}{m}{n}
+       {<->\UnicodeFontFile{lmroman10-regular}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{\UnicodeEncodingName}{lmr}{m}{it}
+       {<->\UnicodeFontFile{lmroman10-italic}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{\UnicodeEncodingName}{lmr}{m}{sc}
+       {<->\UnicodeFontFile{lmromancaps10-regular}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{\UnicodeEncodingName}{lmr}{bx}{n}
+       {<->\UnicodeFontFile{lmroman10-bold}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{\UnicodeEncodingName}{lmr}{bx}{it}
+       {<->\UnicodeFontFile{lmroman10-bolditalic}{\UnicodeFontTeXLigatures}}{}
+}{%
+  \let\UnicodeEncodingName\OldUnicodeEncodingName
+}
+
+\begin{NewUnicodeEncoding}{TUX}
+  \DeclareUnicodeCompositeCommand{\c}{G}{\fbox{cg}}
+\end{NewUnicodeEncoding}
+
 \begin{document}
 
 hello firefly
@@ -21,8 +44,10 @@ hello firefly
 \TEST{\textdagger}
 \TEST{\'e}
 \TEST{\c G}
+{TUX: \fontencoding{TUX}\selectfont {\c G}}
 
-\" \i\ = \i\char "0308\relax\ $\neq$ \char"00EF\relax
+
+\" \i\ = \char"00EF\relax \i\char "0308\relax\ $\neq$ 
 
 \c G = G\char "0327\relax\ = Ģ
 
