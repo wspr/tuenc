@@ -5,19 +5,21 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage{multicol}
 
-\usepackage{expl3,xparse,ifluatex}
+\usepackage{expl3,xparse,ifluatex,unravel}
 \ifluatex\usepackage{luaotfload}\fi
 \usepackage[T1,TU]{fontenc}
 \usepackage{textcomp,lmodern}
 
 \DeclareEncodingFromSubsets{TX}{T1,TS1}{%
   \DeclareUnicodeCompositeCommand{\c}{G}{\fbox{cg}}
+  \DeclareUnicodeCommand{\ae}{a\kern-0.2em\relax e}
+  \DeclareUnicodeSymbol{\textDelta}{"0394}
 }
 
 \begin{document}
 
 % an example:
-\CheckFontSupportsSubsets\font{T1,TS1}
+\CheckFontSupportsSubsets\font{T1,TS1}	
 
 \def\TEST#1{\texttt{\detokenize{#1}}: `{\fontencoding{T1}\selectfont#1}' / `{\fontencoding{TU}\selectfont#1}'\par}
 \parindent=0pt\relax
@@ -28,6 +30,9 @@
 \TEST{\c G}
 {TX: \fontencoding{TX}\selectfont {\c G}}
 
+æ = \ae\ = \char"E6\relax\ // {\fontencoding{TX}\selectfont æ =? \ae =? \char"E6\relax}
+
+{\fontencoding{TU}\selectfont TU: Δ} // {\fontencoding{TX}\selectfont TX: Δ}
 
 \" \i\ = \char"00EF\relax\ $\neq$  \i\char "0308\relax\ 
 
@@ -36,6 +41,8 @@
 \b A = A\char "0332\relax\ = A̲
 
 \section{T1}
+
+The first example is T1 encoding, the second is TU.
 
 \begin{multicols}{3}
 \TEST{\`a \`A}
@@ -224,6 +231,8 @@
 \end{multicols}
 
 \section*{TS1}
+
+The first example is T1 encoding, the second is TU.
 
 \begin{multicols}{3}
 
