@@ -5,37 +5,19 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage{multicol}
 
-\usepackage{expl3,xparse,unravel,ifluatex}
+\usepackage{expl3,xparse,ifluatex}
 \ifluatex\usepackage{luaotfload}\fi
 \usepackage[T1,TU]{fontenc}
 \usepackage{textcomp,lmodern}
 
-\newenvironment{NewUnicodeEncoding}[1]{%
-  \let\OldUnicodeEncodingName\UnicodeEncodingName
-  \def\UnicodeEncodingName{#1}
-  \input{tuenc.def}
-  \DeclareFontFamily{\UnicodeEncodingName}{lmr}{}
-  \DeclareFontShape{\UnicodeEncodingName}{lmr}{m}{n}
-       {<->\UnicodeFontFile{lmroman10-regular}{\UnicodeFontTeXLigatures}}{}
-  \DeclareFontShape{\UnicodeEncodingName}{lmr}{m}{it}
-       {<->\UnicodeFontFile{lmroman10-italic}{\UnicodeFontTeXLigatures}}{}
-  \DeclareFontShape{\UnicodeEncodingName}{lmr}{m}{sc}
-       {<->\UnicodeFontFile{lmromancaps10-regular}{\UnicodeFontTeXLigatures}}{}
-  \DeclareFontShape{\UnicodeEncodingName}{lmr}{bx}{n}
-       {<->\UnicodeFontFile{lmroman10-bold}{\UnicodeFontTeXLigatures}}{}
-  \DeclareFontShape{\UnicodeEncodingName}{lmr}{bx}{it}
-       {<->\UnicodeFontFile{lmroman10-bolditalic}{\UnicodeFontTeXLigatures}}{}
-}{%
-  \let\UnicodeEncodingName\OldUnicodeEncodingName
-}
-
-\begin{NewUnicodeEncoding}{TUX}
+\DeclareEncodingFromSubsets{TX}{T1,TS1}{%
   \DeclareUnicodeCompositeCommand{\c}{G}{\fbox{cg}}
-\end{NewUnicodeEncoding}
+}
 
 \begin{document}
 
-hello firefly
+% an example:
+\CheckFontSupportsSubsets\font{T1,TS1}
 
 \def\TEST#1{\texttt{\detokenize{#1}}: `{\fontencoding{T1}\selectfont#1}' / `{\fontencoding{TU}\selectfont#1}'\par}
 \parindent=0pt\relax
@@ -44,10 +26,10 @@ hello firefly
 \TEST{\textdagger}
 \TEST{\'e}
 \TEST{\c G}
-{TUX: \fontencoding{TUX}\selectfont {\c G}}
+{TX: \fontencoding{TX}\selectfont {\c G}}
 
 
-\" \i\ = \char"00EF\relax \i\char "0308\relax\ $\neq$ 
+\" \i\ = \char"00EF\relax\ $\neq$  \i\char "0308\relax\ 
 
 \c G = G\char "0327\relax\ = Ģ
 
