@@ -45,9 +45,9 @@
 %%\DeclareUnicodeSymbol{\textsevenoldstyle}{55}
 %%\DeclareUnicodeSymbol{\texteightoldstyle}{56}
 %%\DeclareUnicodeSymbol{\textnineoldstyle}{57}
-\DeclareUnicodeSymbol{\textlangle}{"3008}
+\DeclareUnicodeSymbol{\textlangle}{"27E8}
 \DeclareUnicodeSymbol{\textminus}{"2212}
-\DeclareUnicodeSymbol{\textrangle}{"3009}
+\DeclareUnicodeSymbol{\textrangle}{"27E9}
 \DeclareUnicodeSymbol{\textmho}{"2127}
 \DeclareUnicodeSymbol{\textbigcircle}{"25EF}
 \DeclareUnicodeAccent{\textcircled}{"20DD}
