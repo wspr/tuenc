@@ -1,0 +1,43 @@
+
+
+
+\def\unicode@activate@licr#1#2{%
+  \ifnum#1>127\relax
+    \catcode#1=13\relax
+    \begingroup
+      \lccode`\~=#1\relax
+      \lowercase{\endgroup\protected\def~}{#2}%
+  \fi
+}
+
+
+
+%% CHECKING FONTS SUPPORT AN ENCODING
+
+\def\@unicode@fontchar@test#1#2{%
+  \iffontchar#1#2\relax\else
+    \g@addto@macro\@unicode@font@encoding@check{#2}%
+    \def\@unicode@fontchar@test##1##2{%
+      \iffontchar##1##2\relax\else\g@addto@macro\@unicode@font@encoding@check{, ##2}\fi
+    }
+  \fi
+}
+
+\def\CheckFontSupportsSubsets#1#2{%
+  \begingroup
+    \gdef\@unicode@font@encoding@check{}
+    \def\DeclareUnicodeCommand##1##2{}
+    \def\DeclareUnicodeAccent##1##2{\@unicode@fontchar@test{#1}{##2}}
+    \def\DeclareUnicodeSymbol##1##2{\@unicode@fontchar@test{#1}{##2}}
+    \def\DeclareUnicodeComposite##1##2##3{\@unicode@fontchar@test{#1}{##3}}
+    \def\DeclareUnicodeCompositeCommand##1##2##3{}
+    \@for\@ii:=#2\do{%
+      \InputIfFileExists{ucfontrange-\@ii.def}{}{%
+        \@latex@error{Encoding subset file `ufontsub-\@ii.def' not found}{\@ehd}%
+      }%
+    }%
+    \ifx\@unicode@font@encoding@check\@empty\else
+      \@latex@warning{^^JFont "\string#1" is missing the following chars from encoding subsets "#2":^^J\@unicode@font@encoding@check^^J}%
+    \fi
+  \endgroup
+}

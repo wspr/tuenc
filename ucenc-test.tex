@@ -10,18 +10,22 @@
 \usepackage[T1,UC]{fontenc}
 \usepackage{textcomp,lmodern}
 
-\DeclareEncodingFromSubsets{TX}{T1,TS1}{%
+\DeclareUnicodeEncoding{TX}{T1,TS1}{%
   \DeclareUnicodeCompositeCommand{\c}{G}{\fbox{cg}}
   \DeclareUnicodeCommand{\ae}{a\kern-0.2em\relax e}
   \DeclareUnicodeSymbol{\textDelta}{"0394}
 }
+
+\makeatletter
+\input uc-extras.tex
+\makeatother
 
 \begin{document}
 
 % an example:
 \CheckFontSupportsSubsets\font{T1,TS1}	
 
-\def\TEST#1{\texttt{\detokenize{#1}}: `{\fontencoding{T1}\selectfont#1}' / `{\fontencoding{TU}\selectfont#1}'\par}
+\def\TEST#1{\texttt{\detokenize{#1}}: `{\fontencoding{T1}\selectfont#1}' / `{\fontencoding{UC}\selectfont#1}'\par}
 \parindent=0pt\relax
 \raggedright
 
@@ -32,7 +36,7 @@
 
 æ = \ae\ = \char"E6\relax\ // {\fontencoding{TX}\selectfont æ =? \ae =? \char"E6\relax}
 
-{\fontencoding{TU}\selectfont TU: Δ} // {\fontencoding{TX}\selectfont TX: Δ}
+% {\fontencoding{UC}\selectfont UC: \textDelta} // {\fontencoding{TX}\selectfont TX: \textDelta}
 
 \" \i\ = \char"00EF\relax\ $\neq$  \i\char "0308\relax\ 
 
