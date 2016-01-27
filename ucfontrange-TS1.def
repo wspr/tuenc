@@ -1,4 +1,4 @@
-\ProvidesFile{ufontsub-TS1.def}
+\ProvidesFile{ucfontrange-TS1.def}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,7 +64,7 @@
 \DeclareUnicodeSymbol{\textmarried}{"26AD}
 \DeclareUnicodeSymbol{\textmusicalnote}{"266A}
 \DeclareUnicodeSymbol{\texttildelow}{"02F7}
-%% \DeclareUnicodeSymbol{\textdblhyphenchar}{127}
+%% \DeclareUnicodeSymbol{\textdblhyphenchar}{127} %% can't obtain this without deactivating font mapping :(
 \DeclareUnicodeSymbol{\textasciibreve}{"02D8}
 \DeclareUnicodeSymbol{\textasciicaron}{"02C7}
 \DeclareUnicodeSymbol{\textacutedbl}{"02DD}

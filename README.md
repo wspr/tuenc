@@ -1,4 +1,4 @@
-# The "TU" LaTeX font encoding
+# The "UC" LaTeX font encoding
 
 This work is tentative, with aims to merge into LaTeX2e after the TL2016 release.
 This document describes the features of this somewhat unusual encoding, and is intended to initial discussions on what unicode font encodings are all about, really.
@@ -30,7 +30,7 @@ If this package is incorporated into LaTeX2e, these definitions could migrate in
 XeTeX and LuaTeX (via luaotfload) have different syntaxes for loading OpenType fonts.
 The Unicode encoding defines `\UnicodeFontFile` and `\UnicodeFontTeXLigatures` as generic wrapper macros; e.g.:
 
-    \DeclareFontShape{TU}{lmr}{b}{n}
+    \DeclareFontShape{UC}{lmr}{b}{n}
      {<-> \UnicodeFontFile{lmromandemi10-regular}{\UnicodeFontTeXLigatures}}{}
 
 Although not used in the default .fd files, `\UnicodeFontName` is also defined to load a system font by its OpenType name.
@@ -55,9 +55,9 @@ I.e., the encoding definitions look like:
 
 Instead of encoding definitions included in the `enc.def` file, "subsets" are defined with current naming scheme `ufontsub-XYZ.def` where `XYZ` is the name of the subset.
 
-The "default" Unicode encoding, `TU` covers `T1` and `TS1` symbols, and is defined with:
+The "default" Unicode encoding, `UC` covers `T1` and `TS1` symbols, and is defined with:
 
-    \DeclareEncodingFromSubsets{TU}{T1,TS1}{}
+    \DeclareEncodingFromSubsets{UC}{T1,TS1}{}
 
 The third argument is used for package authors who need to make small adjustments on a per-font basis, for example:
 
@@ -72,16 +72,23 @@ The latest version of fontspec allows fonts to be loaded with varying encodings,
 
 ### Active characters
 
-Every Unicode character defined in an encoding subset can be made "active" and hooked into LICR machinery as in 8-bit fonts.
-The advantage here is that we can now give good error messages if the wrong font is used; e.g., writing
+Every Unicode character defined in an encoding subset could be made "active" and hooked into LICR machinery as in 8-bit fonts.
+However, the LaTeX3 team follows Unicode regarding catcode assignment, and all letter-like glyphs are able to be used in control sequences in Unicode TeX engines.
 
-    \DeclareEncodingFromSubsets{TX}{T1,TS1}{%
+As a result, at present there will be no provision for run-time manipulation of arbitrary Unicode input.
+
+*****
+
+In a hypothetical future, we might imagine providing hooks to transform Unicode input into LICR-style input.
+The advantage would be that we could now give good error messages if the wrong font is used; e.g., writing
+
+    \DeclareEncodingFromSubsets{X1}{T1,TS1}{%
        \DeclareUnicodeSymbol{\textDelta}{"0394}%
     }
 
-and then using the Unicode input character in the wrong encoding will yield
+and then using the Unicode input character in the wrong encoding would yield
 
-    LaTeX Error: Command \textDelta unavailable in encoding TU
+    LaTeX Error: Command \textDelta unavailable in encoding UC
 
 Support here needs to be improved. If a user writes
 
@@ -95,7 +102,7 @@ I also like the concept of making various symbols active so that they can be hoo
 
 ### The only thing we can't catch
 
-Unfortunately there is no direct method by which we can catch users who write  letters with composing accents directly in Unicode such as "A̲". If the font does not produce a good result, there's nothing we can do!
+Even if we went via the active-character approach discussed above, there would be no direct method by which we could catch users who write letters with composing accents directly in Unicode such as "A̲" (A+underbar, which has no precomposed Unicode glyph). If the font does not produce a good result, there only thing to do is fall back on traditional TeX input such as `\b A`.
 
 
 ### Checking font support
@@ -120,5 +127,3 @@ But with more explicit, optional, support for Unicode subsets in LaTeX, users wh
 * Naming of `\UnicodeFontTeXLigatures`
 * Naming of `\DeclareUnicodeXYZ` (and cf utf8enc.dfu!)
 * The idea of Unicode subsets
-* Whether or not to "activate" characters (perhaps a switch on/off?)
-* More that I forgot to summarise
