@@ -1,5 +1,4 @@
 %!TEX TS-program = XeLaTeX
-
 \documentclass{article}
 
 \usepackage[margin=2cm]{geometry}
@@ -7,7 +6,7 @@
 
 \usepackage{expl3,xparse,ifluatex,unravel}
 \ifluatex\usepackage{luaotfload}\fi
-\usepackage[T1,UC]{fontenc}
+\usepackage[TU]{fontenc}
 \usepackage{textcomp,lmodern}
 
 \DeclareUnicodeEncoding{TX}{T1,TS1}{%
@@ -17,7 +16,7 @@
 }
 
 \makeatletter
-\input uc-extras.tex
+\input tu-extras.tex
 \makeatother
 
 \begin{document}
@@ -25,7 +24,7 @@
 % an example:
 \CheckFontSupportsSubsets\font{T1,TS1}	
 
-\def\TEST#1{\texttt{\detokenize{#1}}: `{\fontencoding{T1}\selectfont#1}' / `{\fontencoding{UC}\selectfont#1}'\par}
+\def\TEST#1{\texttt{\detokenize{#1}}: `{\fontencoding{T1}\selectfont#1}' / `{\fontencoding{TU}\selectfont#1}'\par}
 \parindent=0pt\relax
 \raggedright
 
@@ -36,7 +35,7 @@
 
 æ = \ae\ = \char"E6\relax\ // {\fontencoding{TX}\selectfont æ =? \ae =? \char"E6\relax}
 
-% {\fontencoding{UC}\selectfont UC: \textDelta} // {\fontencoding{TX}\selectfont TX: \textDelta}
+% {\fontencoding{TU}\selectfont TU: \textDelta} // {\fontencoding{TX}\selectfont TX: \textDelta}
 
 \" \i\ = \char"00EF\relax\ $\neq$  \i\char "0308\relax\ 
 
@@ -46,7 +45,7 @@
 
 \section{T1}
 
-The first example is T1 encoding, the second is TU.
+The first example is `T1' encoding, the second is `TU'.
 
 \begin{multicols}{3}
 \TEST{\`a \`A}

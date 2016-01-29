@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sed -f sed-uclm.sed `kpsewhich t1lmr.fd`   > uclmr.fd
-sed -f sed-uclm.sed `kpsewhich t1lmss.fd`  > uclmss.fd
-sed -f sed-uclm.sed -e \
-    's/\\UnicodeFontTeXLigatures//g' `kpsewhich t1lmtt.fd` > uclmtt.fd
+sed -f sed-tulm.sed `kpsewhich t1lmr.fd`   > tulmr.fd
+sed -f sed-tulm.sed `kpsewhich t1lmss.fd`  > tulmss.fd
+sed -f sed-tulm.sed -e \
+    's/\\UnicodeFontTeXLigatures//g' `kpsewhich t1lmtt.fd` > tulmtt.fd

@@ -1,5 +1,5 @@
 /^%.*/d
-s/{T1}/{UC}/g
+s/{T1}/{TU}/g
 s/t1lm/tulm/g
 
 s/ec-lmri\([0-9]*\)/lmroman\1-italic/g
