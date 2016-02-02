@@ -26,6 +26,17 @@
 \DeclareMathAlphabet{\mathsf}{EU1}{STIXmsfup}{m}{n}
 
 % need to fix all the NFSS math assignments:
+
+\makeatletter
+\def\set@mathchar#1#2#3#4{%  \global\Umathcode'#2="\mathchar@type#3 #1 #4\relax}
+
+\def\set@mathsymbol#1#2#3#4{%
+  \global\Umathchardef#2 "\mathchar@type#3 #1 #4\relax}
+
+\def\DeclareMathSymbol#1#2#3#4{%  \expandafter\in@\csname sym#3\expandafter\endcsname     \expandafter{\group@list}%  \ifin@    \begingroup      \if\relax\noexpand#1% is command?        \edef\reserved@a{\noexpand\in@{\string\mathchar}{\meaning#1}}%        \reserved@a        \ifin@          \expandafter\set@mathsymbol             \csname sym#3\endcsname{#1}{#2}{#4}%          \@font@info{Redeclaring math symbol \string#1}%        \else            \expandafter\ifx            \csname\expandafter\@gobble\string#1\endcsname            \relax            \expandafter\set@mathsymbol               \csname sym#3\endcsname{#1}{#2}{#4}%          \else            \@latex@error{Command ‘\string#1’ already defined}\@eha          \fi\fi \else        \expandafter\set@mathchar          \csname sym#3\endcsname{#1}{#2}{#4}%      \fi    \endgroup  \else    \@latex@error{Symbol font ‘#3’ is not defined}\@eha\fi 
+}
+\makeatother
+
 \DeclareMathSymbol{\omega}{\mathord}{letters}{"1D714}
 
 \begin{document}
