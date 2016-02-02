@@ -1,0 +1,44 @@
+
+\immediate\write18{tex maths-font-mappings.dtx}
+\immediate\write18{sh maths-map.sh}
+
+\IfFileExists{mmath-italic.tec}{}{%
+  \GenericError{}{*** Turn on shell escape ***}{}{}
+}
+
+\documentclass[12pt]{article}
+\usepackage[EU1]{fontenc}
+\usepackage{lmodern}
+
+\newcommand\STIXfont{[xits-math.otf]:script=math;}
+\newcommand\newSTIX[2]{%
+  \DeclareFontFamily{EU1}{#1}{}%
+  \DeclareFontShape{EU1}{#1}{m}{n}
+    {<-6>"\STIXfont;+ssty=1;#2"<6-9>"\STIXfont;+ssty=0;#2"<9->"\STIXfont;#2"}{}%
+}
+\newSTIX{STIXmit}{mapping=math-italic}
+\newSTIX{STIXmup}{}
+\newSTIX{STIXmsfup}{mapping=math-sans}
+\DeclareSymbolFont{operators}{EU1}{STIXmup}{m}{n}
+\DeclareSymbolFont{letters}{EU1}{STIXmit}{m}{n}
+\DeclareSymbolFont{symbols}{EU1}{STIXmit}{m}{n}
+\DeclareSymbolFont{largesymbols}{EU1}{STIXmit}{m}{n}
+\DeclareMathAlphabet{\mathsf}{EU1}{STIXmsfup}{m}{n}
+
+% need to fix all the NFSS math assignments:
+\DeclareMathSymbol{\omega}{\mathord}{letters}{"1D714}
+
+\begin{document}
+
+\[
+  F(\omega) = \int_{-\infty}^{\infty} e^{-i\omega t} f(t) \mathrm{d} t
+\]
+\[
+  \sqrt{\sin^2(\Theta) + \cos^2(\Theta)} = 1
+\]
+\[
+ abc+\mathsf{abc}
+\]
+
+\end{document}
+
