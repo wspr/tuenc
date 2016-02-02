@@ -2,11 +2,11 @@
 \immediate\write18{tex maths-font-mappings.dtx}
 \immediate\write18{sh maths-map.sh}
 
-\IfFileExists{mmath-italic.tec}{}{%
+\IfFileExists{math-italic.tec}{}{%
   \GenericError{}{*** Turn on shell escape ***}{}{}
 }
 
-\documentclass[12pt]{article}
+\documentclass[10pt]{article}
 \usepackage[EU1]{fontenc}
 \usepackage{lmodern}
 
@@ -14,7 +14,7 @@
 \newcommand\newSTIX[2]{%
   \DeclareFontFamily{EU1}{#1}{}%
   \DeclareFontShape{EU1}{#1}{m}{n}
-    {<-6>"\STIXfont;+ssty=1;#2"<6-9>"\STIXfont;+ssty=0;#2"<9->"\STIXfont;#2"}{}%
+    {<-6>"\STIXfont;color=AA0000;+ssty=1;#2"<6-9>"\STIXfont;color=00AA00;+ssty=0;#2"<9->"\STIXfont;#2"}{}%
 }
 \newSTIX{STIXmit}{mapping=math-italic}
 \newSTIX{STIXmup}{}
@@ -37,7 +37,7 @@
   \sqrt{\sin^2(\Theta) + \cos^2(\Theta)} = 1
 \]
 \[
- abc+\mathsf{abc}
+ abc_{abc_{abc}}+\mathsf{abc_{abc_{abc}}}
 \]
 
 \end{document}
