@@ -1,0 +1,167 @@
+\documentclass{article}
+\usepackage{luacode,xparse}
+\begin{document}
+
+\begin{luacode*}
+
+
+    function serialize (o,i)
+      if not(i) then i = 2 end
+      if type(o) == "number" then
+        io.write(o)
+      elseif type(o) == "string" then
+        io.write(string.format("%q", o))
+      elseif type(o) == "table" then
+        io.write("{\n")
+        for k,v in pairs(o) do
+          for v = 1,i do
+            io.write(" ")
+          end
+          io.write("  [")
+          serialize(k)
+          io.write("] = ")
+          serialize(v,i+2)
+          io.write(",\n")
+        end
+          for v = 1,i do
+            io.write(" ")
+          end
+        io.write("}\n")
+      else
+        error("cannot serialize a " .. type(o))
+      end
+    end
+
+    
+  tt = {a=12, b='Lua', key='another "one"'}
+  serialize(tt)
+  
+  
+  enctable={}
+  
+\end{luacode*}
+
+\makeatletter
+\def\CSstring#1{%
+  \string\\\expandafter\@gobble\string#1%
+}
+\makeatother
+
+
+\def\ReadDeclareTextSymbol#1#2#3{%
+  \luaprocess
+    {\luastring{\unexpanded{#1}}}
+    {\luastring{#2}}
+    {#3}{symbol}
+}
+\def\ReadDeclareTextAccent#1#2#3{%
+  \luaprocess
+    {\luastring{\unexpanded{#1}}}
+    {\luastring{#2}}
+    {#3}{accent}
+}
+\def\ReadDeclareTextComposite#1#2#3#4{%
+  \luaprocess
+    {\luastring{\unexpanded{#1#3}}}
+    {\luastring{#2}}
+    {#4}{composite}
+}
+\def\ReadDeclareTextDoubleComposite#1#2#3#4#5{%
+  \luaprocess
+    {\luastring{\unexpanded{#1#3#4}}}
+    {\luastring{#2}}
+    {#5}{composite-dbl}
+}
+\DeclareDocumentCommand\ReadDeclareTextCommand{mmom}{%
+  \luaprocess
+    {\luastring{\unexpanded{#1}}}
+    {\luastring{#2}}
+    {-1}{command}
+}
+\DeclareDocumentCommand\ReadDeclareTextCompositeCommand{mmmom}{%
+  \luaprocess
+    {\luastring{\unexpanded{#1#3}}}
+    {\luastring{#2}}
+    {-1}{composite-command}
+}
+\def\luaprocess#1#2#3#4{%
+  \directlua{
+    if not( enctable[#1] ) then
+      enctable[#1] = {}
+    end
+%    enctable[#1]["type"] = "#4"
+    enctable[#1][#2] = \number#3
+  }
+}
+
+
+\begingroup
+\makeatletter
+\let\DeclareTextCommand\ReadDeclareTextCommand
+\let\DeclareTextSymbol\ReadDeclareTextSymbol
+\let\DeclareTextAccent\ReadDeclareTextAccent
+\let\DeclareTextComposite\ReadDeclareTextComposite
+\let\DeclareTextDoubleComposite\ReadDeclareTextDoubleComposite
+\let\DeclareTextCompositeCommand\ReadDeclareTextCompositeCommand
+\def\DeclareErrorFont#1#2#3#4#5{}
+\def\DeclareFontEncoding#1#2#3{%
+  \def\LastDeclaredEncoding{#1}%
+}
+\def\DeclareFontSubstitution#1#2#3#4{}
+\def\DeclareTextSymbolDefault#1#2{}
+\def\NeedsTeXFormat#1[#2]{}
+\input{ot1enc.def}
+\input{ot2enc.def}
+\input{ot4enc.def}
+\input{ts1enc.def}
+\input{ts3enc.def}% tipa
+\input{t1enc.def}
+\input{t2aenc.def}% cyr
+\input{t2benc.def}% cyr
+\input{t2cenc.def}% cyr
+\input{t3enc.def} % tipa
+\input{t4enc.def}
+\input{t5enc.def}% Vietnamese
+\input{qxenc.def}
+\input{ly1enc.def}
+\input{lcywenc.def}
+\input{il2enc.def}
+\input{lcyenc.def}% cyr
+\input{x2enc.def} % cyr
+\input{lctenc.def}% Tibetan
+\input{lthenc.def}% Thai
+\input{lheenc.def}% Hebrew
+\input{he8enc.def}% Hebrew
+    
+\endgroup
+
+\typeout{ENCODING DEFINITIONS}
+\directlua{serialize(enctable)}
+
+\begin{luacode*}
+encodings = {"OT1","OT2","OT4","TS1","TS3","T1","T2A","T2B","T2C","T3","T4","T5","QX","LY1","LCYW","IL2","LCY","X2","LCT","LTH","LHE","HE8"}
+
+local f = assert(io.open("latex-enc.csv", "w"))
+
+f:write("Sym,")
+for i,enc in pairs(encodings) do
+  f:write(enc,",")
+end
+f:write("\n")
+for k,v in pairs(enctable) do
+  f:write(k,",")
+  for i,enc in pairs(encodings) do
+    symenc = enctable[k][enc]
+    if symenc then
+      f:write(symenc..",")
+    else
+      f:write(",")
+    end
+  end
+  f:write("\n")
+end
+f:close()
+
+\end{luacode*}
+
+\end{document}
