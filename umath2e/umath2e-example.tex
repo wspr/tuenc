@@ -7,15 +7,25 @@
 \usepackage[\EUENC]{fontenc}
 \usepackage{lmodern}
 
+\makeatletter
+\begingroup
+  \normalsize
+  \calculate@math@sizes
+  \csname S@\f@size\endcsname
+  \xdef\umath@sf{\strip@pt\dimexpr0.5\dimexpr\ssf@size pt+\sf@size pt\relax\relax}
+  \xdef\umath@tf{\strip@pt\dimexpr0.5\dimexpr \sf@size pt+\tf@size pt\relax\relax}
+\endgroup
+
 \newcommand\newmathfamily[3]{%
   \def\umathfontname{#1}
   \edef\umathfontdecl{[\umathfontname]:script=math;}
   \DeclareFontFamily{\EUENC}{#2}{}%
-  \DeclareFontShape{\EUENC}{#2}{m}{n}
-    {<-6>"\umathfontdecl;color=AA0000;+ssty=1;#3"%
-     <6-9>"\umathfontdecl;color=00AA00;+ssty=0;#3"%
-     <9->"\umathfontdecl;#3"}{}%
+  \edef\umath@tmpa{\noexpand\DeclareFontShape{\EUENC}{#2}{m}{n}
+    {<-\umath@sf>"\umathfontdecl;color=AA0000;+ssty=1;#3"%
+     <\umath@sf-\umath@tf>"\umathfontdecl;color=00AA00;+ssty=0;#3"%
+     <\umath@tf->"\umathfontdecl;#3"}{}}\umath@tmpa
 }
+\makeatother
 
 \newmathfamily{xits-math.otf}{STIX}{}
 \newmathfamily{xits-math.otf}{STIXmalph}{mapping=math-italic-gen}
@@ -23,14 +33,15 @@
 \newmathfamily{xits-math.otf}{STIXmbfup}{mapping=math-bold}
 \newmathfamily{xits-math.otf}{STIXmtt}  {mapping=math-typewriter}
 \newmathfamily{xits-math.otf}{STIXmfrak}{mapping=math-fraktur}
-\DeclareSymbolFont{operators}{\EUENC}{STIX}{m}{n}
-\DeclareSymbolFont{letters}{\EUENC}{STIXmalph}{m}{n}
-\DeclareSymbolFont{symbols}{\EUENC}{STIX}{m}{n}
+
+\DeclareSymbolFont{operators}   {\EUENC}{STIX}{m}{n}
+\DeclareSymbolFont{symbols}     {\EUENC}{STIX}{m}{n}
 \DeclareSymbolFont{largesymbols}{\EUENC}{STIX}{m}{n}
-\DeclareMathAlphabet{\mathsf}{\EUENC}{STIXmsfup}{m}{n}
-\DeclareMathAlphabet{\mathbf}{\EUENC}{STIXmbfup}{m}{n}
-\DeclareMathAlphabet{\mathtt}{\EUENC}{STIXmtt}{m}{n}
-\DeclareMathAlphabet{\mathfrak}{\EUENC}{STIXmtt}{m}{n}
+\DeclareSymbolFont{letters}{\EUENC}{STIXmalph}{m}{n}
+\DeclareMathAlphabet{\mathsf}  {\EUENC}{STIXmsfup}{m}{n}
+\DeclareMathAlphabet{\mathbf}  {\EUENC}{STIXmbfup}{m}{n}
+\DeclareMathAlphabet{\mathtt}  {\EUENC}{STIXmtt}  {m}{n}
+\DeclareMathAlphabet{\mathfrak}{\EUENC}{STIXmtt}  {m}{n}
 
 \usepackage{umath2e,umathsym2e}
 
