@@ -3,6 +3,7 @@
 
 *.map
 *.tec
+*.fea
 
 *.glo
 *.idx
@@ -13,3 +14,4 @@
 *.ltx
 *.csv
 
+temp/
