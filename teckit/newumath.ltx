@@ -1,47 +1,36 @@
 
-\immediate\write18{tex maths-font-mappings.dtx}
-\immediate\write18{sh maths-map.sh}
-
-\IfFileExists{math-italic.tec}{}{%
-  \GenericError{}{*** Turn on shell escape ***}{}{}
-}
+%\immediate\write18{tex maths-font-mappings.dtx}
+%\immediate\write18{sh maths-map.sh}
 
 \documentclass[10pt]{article}
-\usepackage[EU1]{fontenc}
+\def\EUENC{EU1} % obviously to be TU shortly
+\usepackage[\EUENC]{fontenc}
 \usepackage{lmodern}
 
-\newcommand\STIXfont{[xits-math.otf]:script=math;}
+\edef\STIXfont{[xits-math.otf]:script=math;}
+\def\UMmapping#1{mapping=#1}
 \newcommand\newSTIX[2]{%
-  \DeclareFontFamily{EU1}{#1}{}%
-  \DeclareFontShape{EU1}{#1}{m}{n}
+  \DeclareFontFamily{\EUENC}{#1}{}%
+  \DeclareFontShape{\EUENC}{#1}{m}{n}
     {<-6>"\STIXfont;color=AA0000;+ssty=1;#2"<6-9>"\STIXfont;color=00AA00;+ssty=0;#2"<9->"\STIXfont;#2"}{}%
 }
-\newSTIX{STIXmit}{mapping=math-italic}
-\newSTIX{STIXmup}{}
-\newSTIX{STIXmsfup}{mapping=math-sans}
-\DeclareSymbolFont{operators}{EU1}{STIXmup}{m}{n}
-\DeclareSymbolFont{letters}{EU1}{STIXmit}{m}{n}
-\DeclareSymbolFont{symbols}{EU1}{STIXmit}{m}{n}
-\DeclareSymbolFont{largesymbols}{EU1}{STIXmit}{m}{n}
-\DeclareMathAlphabet{\mathsf}{EU1}{STIXmsfup}{m}{n}
 
-% need to fix all the NFSS math assignments:
+\newSTIX{STIX}     {}
+\newSTIX{STIXmalpha}{\UMmapping{math-italic-gen}}
+\newSTIX{STIXmsfup}{\UMmapping{math-sans}}
+\newSTIX{STIXmbfup}{\UMmapping{math-bold}}
+\newSTIX{STIXmtt}  {\UMmapping{math-typewriter}}
+\newSTIX{STIXmfrak}{\UMmapping{math-fraktur}}
+\DeclareSymbolFont{operators}{\EUENC}{STIX}{m}{n}
+\DeclareSymbolFont{letters}{\EUENC}{STIXmalpha}{m}{n}
+\DeclareSymbolFont{symbols}{\EUENC}{STIX}{m}{n}
+\DeclareSymbolFont{largesymbols}{\EUENC}{STIX}{m}{n}
+\DeclareMathAlphabet{\mathsf}{\EUENC}{STIXmsfup}{m}{n}
+\DeclareMathAlphabet{\mathbf}{\EUENC}{STIXmbfup}{m}{n}
+\DeclareMathAlphabet{\mathtt}{\EUENC}{STIXmtt}{m}{n}
+\DeclareMathAlphabet{\mathfrak}{\EUENC}{STIXmtt}{m}{n}
 
-\makeatletter
-\def\set@mathchar#1#2#3#4{%  \global\Umathcode`#2="\mathchar@type#3 #1 #4\relax}
-
-\def\set@mathsymbol#1#2#3#4{%
-  \global\Umathchardef#2 "\mathchar@type#3 #1 #4\relax}
-
-\def\DeclareMathSymbol#1#2#3#4{%  \expandafter\in@\csname sym#3\expandafter\endcsname     \expandafter{\group@list}%  \ifin@    \begingroup      \if\relax\noexpand#1% is command?        \edef\reserved@a{\noexpand\in@{\string\mathchar}{\meaning#1}}%        \reserved@a        \ifin@          \expandafter\set@mathsymbol             \csname sym#3\endcsname{#1}{#2}{#4}%          \@font@info{Redeclaring math symbol \string#1}%        \else            \expandafter\ifx            \csname\expandafter\@gobble\string#1\endcsname            \relax            \expandafter\set@mathsymbol               \csname sym#3\endcsname{#1}{#2}{#4}%          \else            \@latex@error{Command ‘\string#1’ already defined}\@eha          \fi\fi \else        \expandafter\set@mathchar          \csname sym#3\endcsname{#1}{#2}{#4}%      \fi    \endgroup  \else    \@latex@error{Symbol font ‘#3’ is not defined}\@eha\fi 
-}
-\makeatother
-
-\DeclareMathSymbol{\omega}{\mathord}{letters}{"1D714}
-\DeclareMathSymbol{\Theta}{\mathord}{letters}{"00398}
-\DeclareMathSymbol{\intop}{\mathop}{largesymbols}{"222B}
-\DeclareMathSymbol{\infty}{\mathord}{symbols}{"221E}
-\DeclareMathSymbol{-}{\mathbin}{symbols}{"2212}
+\usepackage{umath2e,umathsym2e}
 
 \begin{document}
 
@@ -55,7 +44,13 @@
  abc_{abc_{abc}}+\mathsf{abc_{abc_{abc}}}
 \]
 \[
-  \left(\left(\left(\left(\left(x\right)\right)\right)\right)\right)
+ \mathbf{bfBF}\quad\mathtt{ttTT}\quad\mathfrak{frakFRAK}
+\]
+\[
+  \left(\left(\left(\left(\left(x^2\right)^2\right)^2\right)^2\right)^2\right)
+\]
+\[
+  \left\lceil \left\lceil \left\lceil x^2 \right\rceil^2 \right\rceil^2 \right\rceil
 \]
 
 \end{document}

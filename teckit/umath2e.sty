@@ -1,0 +1,122 @@
+\ProvidesPackage{umath2e}
+
+% need to fix all the NFSS math assignments
+
+\def\Uset@mathchar#1#2#3#4{%
+  \global\Umathcode`#2="\mathchar@type#3 #1 #4\relax}
+
+\def\Uset@mathsymbol#1#2#3#4{%
+  \global\Umathchardef#2 "\mathchar@type#3 #1 #4\relax}
+
+\def\Uset@mathdelimiter#1#2#3#4{%
+  \xdef#2{\Udelimiter "\mathchar@type#3 #1 #4\relax}%
+}
+\def\Uset@@mathdelimiter#1#2#3{%
+  \global\Udelcode`#2=#1 #3\relax}
+
+
+\def\uDeclareMathSymbol#1#2#3#4{%
+  \expandafter\in@\csname sym#3\expandafter\endcsname
+     \expandafter{\group@list}%
+  \ifin@
+    \begingroup
+      \if\relax\noexpand#1% is command?
+        \edef\reserved@a{\noexpand\in@{\string\mathchar}{\meaning#1}}%
+        \reserved@a
+        \ifin@
+          \expandafter\Uset@mathsymbol
+             \csname sym#3\endcsname{#1}{#2}{#4}%
+          \@font@info{Redeclaring math symbol \string#1}%
+        \else
+            \expandafter\ifx
+            \csname\expandafter\@gobble\string#1\endcsname
+            \relax
+            \expandafter\Uset@mathsymbol
+               \csname sym#3\endcsname{#1}{#2}{#4}%
+          \else
+            \@latex@error{Command ‘\string#1’ already defined}\@eha
+          \fi
+\fi \else
+        \expandafter\Uset@mathchar
+          \csname sym#3\endcsname{#1}{#2}{#4}%
+      \fi
+    \endgroup
+  \else
+    \@latex@error{Symbol font ‘#3’ is not defined}\@eha
+\fi 
+}
+
+
+
+
+\def\uDeclareMathDelimiter#1{%
+  \if\relax\noexpand#1%
+    \expandafter\u@DeclareMathDelimiter
+  \else
+    \expandafter\u@xDeclareMathDelimiter
+  \fi
+  #1}
+
+\def\u@DeclareMathDelimiter#1#2#3#4{%
+  \expandafter\in@\csname sym#3\expandafter\endcsname
+     \expandafter{\group@list}%
+  \ifin@
+      \begingroup
+        \edef\reserved@a{\noexpand\in@{\string\delimiter}{\meaning#1}}%
+        \reserved@a
+        \ifin@
+          \expandafter\Uset@mathdelimiter
+             \csname sym#3\endcsname{#1}{#2}{#4}%
+          \@font@info{Redeclaring math delimiter \string#1}%
+        \else
+            \expandafter\ifx
+            \csname\expandafter\@gobble\string#1\endcsname
+            \relax
+            \expandafter\Uset@mathdelimiter
+              \csname sym#3\endcsname{#1}{#2}{#4}%
+          \else
+            \@latex@error{Command `\string#1' already defined}\@eha
+          \fi
+        \fi
+      \endgroup
+  \else
+    \@latex@error{Symbol font `#3' is not defined}\@eha
+  \fi
+}
+
+\def\u@xDeclareMathDelimiter#1#2#3#4{%
+  \expandafter\in@\csname sym#3\expandafter\endcsname
+     \expandafter{\group@list}%
+  \ifin@
+      \begingroup
+        \expandafter\Uset@@mathdelimiter
+           \csname sym#3\endcsname{#1}{#4}%
+      \endgroup
+  \else
+    \@latex@error{Symbol font `#3' is not defined}\@eha
+  \fi
+}
+
+
+
+\def\uDeclareMathRadical#1#2#3{%
+  \expandafter\ifx
+       \csname\expandafter\@gobble\string#1\endcsname
+       \relax
+     \let#1\radical
+  \fi
+  \edef\reserved@a{\noexpand\in@{\string\radical}{\meaning#1}}%
+  \reserved@a
+  \ifin@
+    \expandafter\in@\csname sym#2\expandafter\endcsname
+       \expandafter{\group@list}%
+    \ifin@
+          \xdef#1{\Uradical \csname sym#2\endcsname\space#3\relax}%
+    \else
+      \@latex@error{Symbol font `#2' is not defined}\@eha
+    \fi
+  \else
+    \@latex@error{Command `\string#1' already defined}\@eha
+  \fi
+}
+
