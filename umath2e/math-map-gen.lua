@@ -720,9 +720,10 @@ end
 f:write('}','\n')
 f:close()
 
+teckit_prefix = "mapping_math_"
 
 for kk,vv in pairs(math_map) do
-  local f = assert(io.open("mapping_math_"..kk..".map", "w"))
+  local f = assert(io.open(teckit_prefix..kk..".map", "w"))
   f:write("LHSName \"ascii\"","\n","RHSName \"","unicode-maths-",kk,"\"","\n","pass(Unicode)","\n\n")
   for k,v in pairs(vv) do
     f:write("U+",k," <> U+",v," ;\n")
@@ -730,4 +731,9 @@ for kk,vv in pairs(math_map) do
   f:close()
 end
 
-
+local f = assert(io.open("teckit_compile_mappings.sh", "w"))
+f:write("#!/bin/sh","\n\n")
+for kk,vv in pairs(math_map) do
+  f:write("teckit_compile ",teckit_prefix,kk,"\n")
+end
+f:close()

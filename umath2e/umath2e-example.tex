@@ -1,9 +1,8 @@
-% !TEX TS-program = LuaLaTeX
+% !TEX TS-program = XeLaTeX
 
 \immediate\write18{tex maths-font-mappings.dtx}
-\immediate\write18{sh maths-map.sh}
+\immediate\write18{sh teckit_compile_mappings.sh}
 
-\RequirePackage{tracefnt}
 \documentclass[10pt]{article}
 
 \makeatletter
@@ -13,13 +12,12 @@
 \ifluatex
 \usepackage{luacode,luaotfload}
 \begin{luacode*}
-require('serialise.lua')
 require('font-callback-mapping.lua')
 \end{luacode*}
 
 \newcommand\fonthook[1]{%
-  \edef\@tempa{#1}\def\@tempb{}%
-  \ifx\@tempa\@tempb\else
+  \edef\@tmpa{#1}\def\@tmpb{}%
+  \ifx\@tmpa\@tmpb\else
     \directlua{mathmapstr = '#1'}%
   \fi}
 \fi
@@ -94,8 +92,6 @@ require('font-callback-mapping.lua')
   \ifnum\numexpr#1\relax<1000 0\number\numexpr#1\relax\fi\fi\fi
 }
 
-\makeatother
-
 \def\DeclUSymbolFont#1#2#3#4{%
   \def\@tmpa{#4}\def\@tmpb{}%
   \ifx\@tmpa\@tmpb
@@ -123,6 +119,7 @@ require('font-callback-mapping.lua')
   \ifcsname \mathencodingdefault+\umath@family\endcsname\else
     \DeclareMathFamily{#1}{#3}{#4}%
   \fi
+ 
   \DeclareMathAlphabet
     {#2}
     {\mathencodingdefault}
@@ -152,6 +149,7 @@ require('font-callback-mapping.lua')
 
 \usepackage{umath2e,umathsym2e}
 
+\usepackage{pgffor}
 
 \begin{document}
 
@@ -226,6 +224,15 @@ $\mathbfsfit{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
 $\mathbfsfit{abcdefghijklmnopqrstuvwxyz}$ \\
 $\mathbfsfit{ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ}$\quad$\mathbfsfit{ϴ}$ \\
 $\mathbfsfit{αβγδεζηθικλμνξοπρστυφχψω}$\quad$\mathbfsfit{ϵϑϰϕϱϖ}$ \\
+
+\foreach \x in {text,script,scriptscript}
+  {
+    \foreach \y in {0,1,...,16}
+      {
+        \typeout{\x\space\y\space\expandafter\the\csname\x font\endcsname\y\space\expandafter\meaning\the\csname\x font\endcsname\y\space}
+      }
+  }
+
 
 \end{document}
 
