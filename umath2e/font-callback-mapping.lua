@@ -11,7 +11,6 @@ function x_define_font(name,size,id)
 --    for k,v in pairs(thisfont) do
 --      print(k)
 --    end
-    print('\n*************\nDefine font callback mapping hook: ',mathmapstr)
     for k,v in pairs(this_mapping) do
 	    thisfont.characters[k]=subst_glyph(thisfont,v)
 	  end
