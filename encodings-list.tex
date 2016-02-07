@@ -41,13 +41,6 @@
   
 \end{luacode*}
 
-\makeatletter
-\def\CSstring#1{%
-  \string\\\expandafter\@gobble\string#1%
-}
-\makeatother
-
-
 \def\ReadDeclareTextSymbol#1#2#3{%
   \luaprocess
     {\luastring{\unexpanded{#1}}}

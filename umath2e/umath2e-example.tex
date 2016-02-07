@@ -1,13 +1,32 @@
+% !TEX TS-program = LuaLaTeX
 
 \immediate\write18{tex maths-font-mappings.dtx}
 \immediate\write18{sh maths-map.sh}
 
+\RequirePackage{tracefnt}
 \documentclass[10pt]{article}
-\def\EUENC{EU1} % obviously to be TU shortly
-\usepackage[\EUENC]{fontenc}
-\usepackage{lmodern}
 
 \makeatletter
+
+\usepackage{ifluatex,ifxetex}
+
+\ifluatex
+\usepackage{luacode,luaotfload}
+\begin{luacode*}
+require('serialise.lua')
+require('font-callback-mapping.lua')
+\end{luacode*}
+
+\newcommand\fonthook[1]{%
+  \edef\@tempa{#1}\def\@tempb{}%
+  \ifx\@tempa\@tempb\else
+    \directlua{mathmapstr = '#1'}%
+  \fi}
+\fi
+
+\usepackage[TU]{fontenc}
+\usepackage{lmodern}
+
 \begingroup
   \normalsize
   \calculate@math@sizes
@@ -16,36 +35,127 @@
   \xdef\umath@tf{\strip@pt\dimexpr0.5\dimexpr \sf@size pt+\tf@size pt\relax\relax}
 \endgroup
 
-\newcommand\newmathfamily[3]{%
-  \def\umathfontname{#1}
-  \edef\umathfontdecl{[\umathfontname]:script=math;}
-  \DeclareFontFamily{\EUENC}{#2}{}%
-  \edef\umath@tmpa{\noexpand\DeclareFontShape{\EUENC}{#2}{m}{n}
-    {<-\umath@sf>"\umathfontdecl;color=AA0000;+ssty=1;#3"%
-     <\umath@sf-\umath@tf>"\umathfontdecl;color=00AA00;+ssty=0;#3"%
-     <\umath@tf->"\umathfontdecl;#3"}{}}\umath@tmpa
+
+\def\extract@font{%
+  \get@external@font
+  \csname \curr@fontshape+preloadhook\endcsname
+  \global\expandafter\font\font@name\external@font\relax
+  \font@name \relax
+  \csname \f@encoding+\f@family \endcsname
+  \csname \curr@fontshape       \endcsname
+  \ifluatex\fonthook{nil}\fi
+  \relax
 }
+
+\newcommand\mathencodingdefault{TU}
+\newcommand\mathseriesdefault{m}
+\newcommand\mathshapedefault{m}
+
+\newcount\mathscaleincr
+\mathscaleincr=0\relax
+
+\newcommand\DeclareMathFamily[3]{%
+  \def\umathfontname{#1}%
+  \def\@tmpa{#3}\def\@tmpb{}%
+  \ifx\@tmpa\@tmpb
+    \def\umath@family{#2}%
+  \else
+    \def\umath@family{#2-map-#3}%
+  \fi
+  \edef\umathfontdecl{[\umathfontname]:script=math}%
+  \edef\umath@mapping{\ifxetex mapping=mapping_math_#3\fi}%
+  \DeclareFontFamily{\mathencodingdefault}{\umath@family}{}%
+  \edef\umath@tmpa{\noexpand\DeclareFontShape
+    {\mathencodingdefault}
+    {\umath@family}
+    {\mathseriesdefault}
+    {\mathshapedefault}
+    {<-\umath@sf>%
+     s*[1.\paddednum{\mathscaleincr+0}]%
+     "\umathfontdecl;color=AA0000;+ssty=1;\umath@mapping"%
+     <\umath@sf-\umath@tf>%
+     s*[1.\paddednum{\mathscaleincr+1}]%
+     "\umathfontdecl;color=00AA00;+ssty=0;\umath@mapping"%
+     <\umath@tf->%
+     s*[1.\paddednum{\mathscaleincr+2}]%
+     "\umathfontdecl;\umath@mapping"}
+    {}}\umath@tmpa
+  \mathscaleincr=\numexpr\mathscaleincr+3\relax
+  \ifluatex
+    \expandafter\gdef\csname 
+        \mathencodingdefault/\umath@family/\mathseriesdefault/\mathshapedefault+preloadhook%
+      \endcsname{\fonthook{#3}}
+  \fi  
+}
+
+\def\paddednum#1{%
+  \ifnum\numexpr#1\relax<10 000\number\numexpr#1\relax\else
+  \ifnum\numexpr#1\relax<100 00\number\numexpr#1\relax\else
+  \ifnum\numexpr#1\relax<1000 0\number\numexpr#1\relax\fi\fi\fi
+}
+
 \makeatother
 
-\newmathfamily{xits-math.otf}{STIX}{}
-\newmathfamily{xits-math.otf}{STIXmalph}{mapping=math-italic-gen}
-\newmathfamily{xits-math.otf}{STIXmsfup}{mapping=math-sans}
-\newmathfamily{xits-math.otf}{STIXmbfup}{mapping=math-bold}
-\newmathfamily{xits-math.otf}{STIXmtt}  {mapping=math-typewriter}
-\newmathfamily{xits-math.otf}{STIXmfrak}{mapping=math-fraktur}
+\def\DeclUSymbolFont#1#2#3#4{%
+  \def\@tmpa{#4}\def\@tmpb{}%
+  \ifx\@tmpa\@tmpb
+    \def\umath@family{#3}%
+  \else
+    \def\umath@family{#3-map-#4}%
+  \fi
+  \ifcsname \mathencodingdefault+\umath@family\endcsname\else
+    \DeclareMathFamily{#1}{#3}{#4}%
+  \fi
+  \DeclareSymbolFont
+    {#2}
+    {\mathencodingdefault}
+    {\umath@family}
+    {\mathseriesdefault}
+    {\mathshapedefault}%
+}
+\def\DeclUMathAlph#1#2#3#4{%
+  \def\@tmpa{#4}\def\@tmpb{}%
+  \ifx\@tmpa\@tmpb
+    \def\umath@family{#3}%
+  \else
+    \def\umath@family{#3-map-#4}%
+  \fi
+  \ifcsname \mathencodingdefault+\umath@family\endcsname\else
+    \DeclareMathFamily{#1}{#3}{#4}%
+  \fi
+  \DeclareMathAlphabet
+    {#2}
+    {\mathencodingdefault}
+    {\umath@family}
+    {\mathseriesdefault}
+    {\mathshapedefault}%
+}
 
-\DeclareSymbolFont{operators}   {\EUENC}{STIX}{m}{n}
-\DeclareSymbolFont{symbols}     {\EUENC}{STIX}{m}{n}
-\DeclareSymbolFont{largesymbols}{\EUENC}{STIX}{m}{n}
-\DeclareSymbolFont{letters}{\EUENC}{STIXmalph}{m}{n}
-\DeclareMathAlphabet{\mathsf}  {\EUENC}{STIXmsfup}{m}{n}
-\DeclareMathAlphabet{\mathbf}  {\EUENC}{STIXmbfup}{m}{n}
-\DeclareMathAlphabet{\mathtt}  {\EUENC}{STIXmtt}  {m}{n}
-\DeclareMathAlphabet{\mathfrak}{\EUENC}{STIXmtt}  {m}{n}
+\DeclUSymbolFont{xits-math.otf}{operators}   {STIX}{}
+\DeclUSymbolFont{xits-math.otf}{symbols}     {STIX}{}
+\DeclUSymbolFont{xits-math.otf}{largesymbols}{STIX}{}
+\DeclUSymbolFont{xits-math.otf}{letters}     {STIX}{italic}
+
+\DeclUMathAlph{xits-math.otf}{\mathrm}  {STIX}{}
+\DeclUMathAlph{xits-math.otf}{\mathbf}  {STIX}{bold}
+\DeclUMathAlph{xits-math.otf}{\mathbfit}{STIX}{bolditalic}
+\DeclUMathAlph{xits-math.otf}{\mathsf}  {STIX}{sans}
+\DeclUMathAlph{xits-math.otf}{\mathsfit}{STIX}{sansitalic}
+\DeclUMathAlph{xits-math.otf}{\mathbfsf}  {STIX}{boldsans}
+\DeclUMathAlph{xits-math.otf}{\mathbfsfit}{STIX}{boldsansitalic}
+\DeclUMathAlph{xits-math.otf}{\mathbb } {STIX}{bb}
+\DeclUMathAlph{xits-math.otf}{\mathtt } {STIX}{tt}
+\DeclUMathAlph{xits-math.otf}{\mathscr} {STIX}{scr}
+\DeclUMathAlph{xits-math.otf}{\mathbfscr}{STIX}{boldscr}
+\DeclUMathAlph{xits-math.otf}{\mathfrak}{STIX}{frak}
+\DeclUMathAlph{xits-math.otf}{\mathbffrak}{STIX}{boldfrak}
 
 \usepackage{umath2e,umathsym2e}
 
+
 \begin{document}
+
+$x \mathbf{foo}$
 
 \[
   F(\omega) = \int_{-\infty}^{\infty} e^{-i\omega t} f(t) \mathrm{d} t
@@ -65,6 +175,57 @@
 \[
   \left\lceil \left\lceil \left\lceil x^2 \right\rceil^2 \right\rceil^2 \right\rceil
 \]
+
+\newpage
+\setlength\parindent{0pt}
+
+$0123456789$ \\
+$\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathrm{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathrm{ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ}$\quad$\mathrm{ϴ}$ \\
+$\mathrm{αβγδεζηθικλμνξοπρστυφχψω}$\quad$\mathrm{ϵϑϰϕϱϖ}$ \\
+$\mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathit{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathit{ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ}$\quad$\mathit{ϴ}$ \\
+$\mathit{αβγδεζηθικλμνξοπρστυφχψω}$\quad$\mathit{ϵϑϰϕϱϖ}$ \\
+$\mathbb{0123456789}$ \\
+$\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathbb{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathscr{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathfrak{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathsf{0123456789}$ \\
+$\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathsf{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathsfit{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathsfit{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathtt{0123456789}$ \\
+$\mathtt{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathtt{abcdefghijklmnopqrstuvwxyz}$ \\
+
+\newpage
+$\mathbfit{0123456789}$ \\
+$\mathbfit{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathbfit{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathbfit{ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ}$\quad$\mathbfit{ϴ}$ \\
+$\mathbfit{αβγδεζηθικλμνξοπρστυφχψω}$\quad$\mathbfit{ϵϑϰϕϱϖ}$ \\
+$\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathbf{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathbf{ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ}$\quad$\mathbf{ϴ}$ \\
+$\mathbf{αβγδεζηθικλμνξοπρστυφχψω}$\quad$\mathbf{ϵϑϰϕϱϖ}$ \\
+$\mathbffrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathbffrak{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathbfscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathbfscr{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathbfsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathbfsf{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathbfsf{ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ}$\quad$\mathbfsf{ϴ}$ \\
+$\mathbfsf{αβγδεζηθικλμνξοπρστυφχψω}$\quad$\mathbfsf{ϵϑϰϕϱϖ}$ \\
+$\mathbfsfit{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$ \\
+$\mathbfsfit{abcdefghijklmnopqrstuvwxyz}$ \\
+$\mathbfsfit{ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ}$\quad$\mathbfsfit{ϴ}$ \\
+$\mathbfsfit{αβγδεζηθικλμνξοπρστυφχψω}$\quad$\mathbfsfit{ϵϑϰϕϱϖ}$ \\
 
 \end{document}
 

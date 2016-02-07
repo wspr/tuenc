@@ -1,0 +1,55 @@
+% !TEX TS-program = LuaTeX
+
+\input ltluatex.tex\relax
+\input luaotfload.sty\relax
+
+\directlua{
+require('serialise.lua')
+require('font-callback-mapping.lua')
+}
+
+\def\fonthookon#1{%
+  \par\bigskip\noindent [Applying hook `\detokenize{#1}']
+  \directlua{mathmapstr = '#1'}%
+}
+\def\fonthookoff {\directlua{mathmapstr = nil}}
+
+\long\def\test{\par\noindent{\expandafter\meaning\the\font}\endgraf
+ ascii: abc ABC αβγ ΦΨΩ 123 /  literal: 𝑎𝑏𝑐 𝐴𝐵𝐶 𝛼𝛽𝛾 𝛷𝛹𝛺 }
+
+
+\font\x="[xits-math.otf]:color=00AA00"\relax
+{\x\test}
+
+\fonthookon{italic}
+\font\x="[texgyrepagella-math.otf]"\relax
+\fonthookoff
+{\x\test}
+
+\fonthookon{bolditalic}
+\font\y="[texgyrepagella-math.otf]"\relax
+\fonthookoff
+{\y\test}
+
+{\x\test}
+
+\fonthookon{italic}
+\def\mth{[texgyrepagella-math.otf]:color=AA0000;}
+\font\1="\mth:script=math" at 10pt
+\font\2="\mth:script=math;+ssty=0" at 7pt
+\font\3="\mth:script=math;+ssty=1" at 5pt
+\fonthookoff
+\textfont0=\1 \scriptfont0=\2 \scriptscriptfont0=\3
+\textfont1=\1 \scriptfont1=\2 \scriptscriptfont1=\3
+\textfont2=\1 \scriptfont2=\2 \scriptscriptfont2=\3
+\textfont3=\1 \scriptfont3=\2 \scriptscriptfont3=\3
+
+\Umathchardef\alpha="0 "1 `α
+\Umathchardef\beta="0 "1 `β
+\Umathchardef\gamma="0 "1 `γ
+
+$abc\quad ABC\quad \alpha\beta\gamma$
+
+\bye
+
+

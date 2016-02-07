@@ -1,0 +1,186 @@
+\documentclass{article}
+\usepackage{luacode,xparse}
+\begin{document}
+
+\begin{luacode*}
+  require('serialise.lua')
+  latex_math = {}
+\end{luacode*}
+
+\makeatletter
+
+\def\ReadDeclareMathSymbol#1#2#3#4{%
+  \directlua{
+    slot = \luastring{\unexpanded{#1}}
+    if not( latex_math[slot] ) then
+      latex_math[slot] = {}
+    end
+    latex_math[slot]["class"] = \luastring{\unexpanded{#2}}
+    latex_math[slot]["fam"]   = \luastring{\unexpanded{#3}}
+    latex_math[slot]["slot_legacy"] = \number\numexpr #4\relax
+    latex_math[slot]["type"] = "symbol"
+  }
+}
+\def\ReadDeclareMathAccent#1#2#3#4{%
+  \directlua{
+    slot = \luastring{\unexpanded{#1}}
+    if not( latex_math[slot] ) then
+      latex_math[slot] = {}
+    end
+    latex_math[slot]["class"] = \luastring{\unexpanded{#2}}
+    latex_math[slot]["fam"]   = \luastring{\unexpanded{#3}}
+    latex_math[slot]["slot_legacy"] = \number\numexpr #4\relax
+    latex_math[slot]["type"] = "accent"
+  }
+}
+
+\def\ReadDeclareMathDelimiter#1#2#3#4#5#6{%
+  \directlua{
+    slot = \luastring{\unexpanded{#1}}
+    if not( latex_math[slot] ) then
+      latex_math[slot] = {}
+    end
+    latex_math[slot]["class"] = \luastring{\unexpanded{#2}}
+    latex_math[slot]["fam"]   = {
+      \luastring{\unexpanded{#3}},
+      \luastring{\unexpanded{#5}},
+    }
+    latex_math[slot]["slot_legacy"] = {
+      \number\numexpr #4\relax ,
+      \number\numexpr #6\relax ,
+    }
+    latex_math[slot]["type"] = "delimiter"
+  }
+}
+
+\def\ReadDeclareMathRadical#1#2#3#4#5{%
+  \directlua{
+    slot = \luastring{\unexpanded{#1}}
+    if not( latex_math[slot] ) then
+      latex_math[slot] = {}
+    end
+    latex_math[slot]["fam"]   = {
+      \luastring{\unexpanded{#2}},
+      \luastring{\unexpanded{#4}},
+    }
+    latex_math[slot]["slot_legacy"] = {
+      \number\numexpr #3\relax ,
+      \number\numexpr #5\relax ,
+    }
+    latex_math[slot]["type"] = "radical"
+  }
+}
+
+\def\ReadUnicodeMath#1#2#3#4{%
+  \directlua{
+    slot = \luastring{\unexpanded{#2}}
+    if ( latex_math[slot] ) then
+      if not( latex_math[slot]["class"] == \luastring{\unexpanded{#3}} ) then 
+        latex_math[slot]["Uclass"] = \luastring{\unexpanded{#3}} ;
+      end
+      latex_math[slot]["USV"] = \number\numexpr #1\relax ;
+    end
+  }
+}
+
+\let\@@def\def
+\def\ReadDef#1{%
+  \directlua{
+    slot = \luastring{\unexpanded{#1}}
+    if not( latex_math[slot] ) then
+      latex_math[slot] = {}
+    end
+    latex_math[slot]["type"] = "constructed"
+  }
+  \@@def\@@tmp
+}
+
+\let\@@let\let
+\def\ReadLet#1=#2{%
+  \directlua{
+    syn  = \luastring{\unexpanded{#1}}
+    slot = \luastring{\unexpanded{#2}}
+    latex_math[syn] = latex_math[slot]
+    latex_math[syn]["copy-of"] = slot
+    latex_math[slot]["synonym"] = syn
+  }
+}
+
+
+\AtEndDocument{
+\typeout{LaTeX2e MATH DEFINITIONS}
+\directlua{serialize(latex_math)}
+}
+
+\begingroup
+
+\let\DeclareMathSymbol\ReadDeclareMathSymbol
+\let\DeclareMathDelimiter\ReadDeclareMathDelimiter
+\let\DeclareMathAccent\ReadDeclareMathAccent
+\let\DeclareMathRadical\ReadDeclareMathRadical
+\let\def\ReadDef
+\let\UnicodeMathSymbol\ReadUnicodeMath
+\let\let\ReadLet
+\@@input syms-2e-table.tex\relax
+\@@input unicode-math-table.tex\relax
+\endgroup
+
+\begin{luacode*}
+local f = assert(io.open("syms-2e-unicode.tex", "w"))
+
+f:write("\n")
+for k,v in pairs(latex_math) do
+  if ( v.type == "symbol") and v.USV then
+    f:write("\\DeclareMathSymbol{",k,"}")
+    f:write("{",v.class,"}")
+    f:write("{",v.fam,"}")
+    f:write("{",v.USV,"}")
+    f:write("\n")
+  end
+  if ( v.type == "delimiter") and v.USV then
+    f:write("\\DeclareMathDelimiter{",k,"}")
+    f:write("{",v.class,"}")
+    f:write("{",v.fam[1],"}")
+    f:write("{",v.USV,"}")
+    f:write("\n")
+  end
+  if ( v.type == "radical") and v.USV then
+    f:write("\\DeclareMathRadical{",k,"}")
+    f:write("{",v.class,"}")
+    f:write("{",v.fam[1],"}")
+    f:write("{",v.USV,"}")
+    f:write("\n")
+  end
+end
+f:write("\n\\endinput\n")
+
+f:write("\n")
+for k,v in pairs(latex_math) do
+  if ( v.type == "symbol") and not(v.USV) then
+    f:write("\\DeclareMathSymbol{",k,"}")
+    f:write("{...}")
+    f:write("{...}")
+    f:write("{...}")
+    f:write("\n")
+  end
+  if ( v.type == "delimiter") and not(v.USV) then
+    f:write("\\DeclareMathDelimiter{",k,"}")
+    f:write("{...}")
+    f:write("{...}")
+    f:write("{...}")
+    f:write("\n")
+  end
+  if ( v.type == "radical") and not(v.USV) then
+    f:write("\\DeclareMathRadical{",k,"}")
+    f:write("{...}")
+    f:write("{...}")
+    f:write("{...}")
+    f:write("\n")
+  end
+end
+
+f:close()
+\end{luacode*}
+
+
+\end{document}
