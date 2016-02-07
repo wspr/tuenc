@@ -1,11 +1,10 @@
 \ProvidesPackage{umath2e}
 
-\RequirePackage{luaotfload}
-\RequirePackage[TU]{fontenc}
-
 % font loading commands
 
 \ifdefined\directlua
+
+\RequirePackage{luaotfload}
 
 \directlua{
 require('font-callback-mapping.lua')
@@ -30,6 +29,8 @@ require('font-callback-mapping.lua')
 
 \fi
 
+\RequirePackage[TU]{fontenc}
+
 \begingroup
   \normalsize
   \calculate@math@sizes
@@ -53,7 +54,8 @@ require('font-callback-mapping.lua')
   \else
     \def\umath@family{#2-map-#3}%
   \fi
-  \edef\umathfontdecl{[\umath@fontname]:script=math}%
+  \edef\umathfontdecl{[\umath@fontname]:}%
+  \edef\umath@mode{\ifdefined\directlua mode=base;\fi}%
   \edef\umath@mapping{\ifdefined\directlua\else mapping=mapping_math_#3\fi}%
   \DeclareFontFamily{\mathencodingdefault}{\umath@family}{}%
   \edef\umath@tmpa{\noexpand\DeclareFontShape
@@ -63,10 +65,10 @@ require('font-callback-mapping.lua')
     {\mathshapedefault}
     {<-\umath@sf>%
      s*[1.\umath@paddednum{\umath@scalecount+0}]%
-     "\umathfontdecl;color=AA0000;+ssty=1;\umath@mapping"%
+     "\umathfontdecl\umath@mode script=math;+ssty=1;\umath@mapping"%
      <\umath@sf-\umath@tf>%
      s*[1.\umath@paddednum{\umath@scalecount+1}]%
-     "\umathfontdecl;color=00AA00;+ssty=0;\umath@mapping"%
+     "\umathfontdecl\umath@mode script=math;+ssty=0;\umath@mapping"%
      <\umath@tf->%
      s*[1.\umath@paddednum{\umath@scalecount+2}]%
      "\umathfontdecl;\umath@mapping"}
