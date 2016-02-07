@@ -1,131 +1,10 @@
 % !TEX TS-program = XeLaTeX
 
-\immediate\write18{tex maths-font-mappings.dtx}
-\immediate\write18{sh teckit_compile_mappings.sh}
 
-\documentclass[10pt]{article}
-
-\usepackage{ifluatex,ifxetex}
+\documentclass{article}
 \usepackage[TU]{fontenc}
 \usepackage{lmodern}
-
-\makeatletter
-
-\ifluatex
-
-\usepackage{luacode,luaotfload}
-\begin{luacode*}
-require('font-callback-mapping.lua')
-\end{luacode*}
-
-\newcommand\fonthook[1]{%
-  \edef\@tmpa{#1}\def\@tmpb{}%
-  \ifx\@tmpa\@tmpb\else
-    \directlua{mathmapstr = '#1'}%
-  \fi}
-
-\def\extract@font{%
-  \get@external@font
-  \csname \curr@fontshape+preloadhook\endcsname
-  \global\expandafter\font\font@name\external@font\relax
-  \font@name \relax
-  \csname \f@encoding+\f@family \endcsname
-  \csname \curr@fontshape       \endcsname
-  \fonthook{nil}
-  \relax
-}
-
-\fi
-
-\begingroup
-  \normalsize
-  \calculate@math@sizes
-  \csname S@\f@size\endcsname
-  \xdef\umath@sf{\strip@pt\dimexpr0.5\dimexpr\ssf@size pt+\sf@size pt\relax\relax}
-  \xdef\umath@tf{\strip@pt\dimexpr0.5\dimexpr \sf@size pt+\tf@size pt\relax\relax}
-\endgroup
-
-\newcommand\mathencodingdefault{TU}
-\newcommand\mathseriesdefault{m}
-\newcommand\mathshapedefault{m}
-
-\newcount\umath@scalecount
-\umath@scalecount=0\relax
-
-\newcommand\DeclareMathFamily[3]{%
-  \def\umath@fontname{#1}%
-  \def\@tmpa{#3}\def\@tmpb{}%
-  \ifx\@tmpa\@tmpb
-    \def\umath@family{#2}%
-  \else
-    \def\umath@family{#2-map-#3}%
-  \fi
-  \edef\umathfontdecl{[\umath@fontname]:script=math}%
-  \edef\umath@mapping{\ifxetex mapping=mapping_math_#3\fi}%
-  \DeclareFontFamily{\mathencodingdefault}{\umath@family}{}%
-  \edef\umath@tmpa{\noexpand\DeclareFontShape
-    {\mathencodingdefault}
-    {\umath@family}
-    {\mathseriesdefault}
-    {\mathshapedefault}
-    {<-\umath@sf>%
-     s*[1.\umath@paddednum{\umath@scalecount+0}]%
-     "\umathfontdecl;color=AA0000;+ssty=1;\umath@mapping"%
-     <\umath@sf-\umath@tf>%
-     s*[1.\umath@paddednum{\umath@scalecount+1}]%
-     "\umathfontdecl;color=00AA00;+ssty=0;\umath@mapping"%
-     <\umath@tf->%
-     s*[1.\umath@paddednum{\umath@scalecount+2}]%
-     "\umathfontdecl;\umath@mapping"}
-    {}}\umath@tmpa
-  \umath@scalecount=\numexpr\umath@scalecount+3\relax
-  \ifluatex
-    \expandafter\gdef\csname 
-        \mathencodingdefault/\umath@family/\mathseriesdefault/\mathshapedefault+preloadhook%
-      \endcsname{\fonthook{#3}}
-  \fi  
-}
-
-\def\umath@paddednum#1{%
-  \ifnum\numexpr#1\relax<10 000\number\numexpr#1\relax\else
-  \ifnum\numexpr#1\relax<100 00\number\numexpr#1\relax\else
-  \ifnum\numexpr#1\relax<1000 0\number\numexpr#1\relax\fi\fi\fi
-}
-
-\def\DeclUSymbolFont#1#2#3#4{%
-  \def\@tmpa{#4}\def\@tmpb{}%
-  \ifx\@tmpa\@tmpb
-    \def\umath@family{#3}%
-  \else
-    \def\umath@family{#3-map-#4}%
-  \fi
-  \ifcsname \mathencodingdefault+\umath@family\endcsname\else
-    \DeclareMathFamily{#1}{#3}{#4}%
-  \fi
-  \DeclareSymbolFont
-    {#2}
-    {\mathencodingdefault}
-    {\umath@family}
-    {\mathseriesdefault}
-    {\mathshapedefault}%
-}
-\def\DeclUMathAlph#1#2#3#4{%
-  \def\@tmpa{#4}\def\@tmpb{}%
-  \ifx\@tmpa\@tmpb
-    \def\umath@family{#3}%
-  \else
-    \def\umath@family{#3-map-#4}%
-  \fi
-  \ifcsname \mathencodingdefault+\umath@family\endcsname\else
-    \DeclareMathFamily{#1}{#3}{#4}%
-  \fi
-  \DeclareMathAlphabet
-    {#2}
-    {\mathencodingdefault}
-    {\umath@family}
-    {\mathseriesdefault}
-    {\mathshapedefault}%
-}
+\usepackage{umath2e}
 
 \DeclUSymbolFont{xits-math.otf}{operators}   {STIX}{}
 \DeclUSymbolFont{xits-math.otf}{symbols}     {STIX}{}
@@ -147,8 +26,6 @@ require('font-callback-mapping.lua')
 \DeclUMathAlph{xits-math.otf}{\mathbfsfit}{STIX}{boldsansitalic}
 \DeclUMathAlph{xits-math.otf}{\mathbfscr} {STIX}{boldscr}
 \DeclUMathAlph{xits-math.otf}{\mathbffrak}{STIX}{boldfrak}
-
-\usepackage{umath2e,umathsym2e}
 
 \begin{document}
 
