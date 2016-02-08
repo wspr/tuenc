@@ -1,6 +1,6 @@
 
 require('math-map-gen.lua')
-require('mapping-math.lua')
+require('umath-alphabet-mappings.lua')
 
 orig_define_font=luatexbase.remove_from_callback('define_font','luaotfload.define_font')
 

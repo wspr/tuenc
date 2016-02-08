@@ -1,167 +1,42 @@
 
-math_sym_names = {
-  ["mrmA"] = "0041" ,
-  ["mrmB"] = "0042" ,
-  ["mrmC"] = "0043" ,
-  ["mrmD"] = "0044" ,
-  ["mrmE"] = "0045" ,
-  ["mrmF"] = "0046" ,
-  ["mrmG"] = "0047" ,
-  ["mrmH"] = "0048" ,
-  ["mrmI"] = "0049" ,
-  ["mrmJ"] = "004A" ,
-  ["mrmK"] = "004B" ,
-  ["mrmL"] = "004C" ,
-  ["mrmM"] = "004D" ,
-  ["mrmN"] = "004E" ,
-  ["mrmO"] = "004F" ,
-  ["mrmP"] = "0050" ,
-  ["mrmQ"] = "0051" ,
-  ["mrmR"] = "0052" ,
-  ["mrmS"] = "0053" ,
-  ["mrmT"] = "0054" ,
-  ["mrmU"] = "0055" ,
-  ["mrmV"] = "0056" ,
-  ["mrmW"] = "0057" ,
-  ["mrmX"] = "0058" ,
-  ["mrmY"] = "0059" ,
-  ["mrmZ"] = "005A" ,
-  ["mrma"] = "0061" ,
-  ["mrmb"] = "0062" ,
-  ["mrmc"] = "0063" ,
-  ["mrmd"] = "0064" ,
-  ["mrme"] = "0065" ,
-  ["mrmf"] = "0066" ,
-  ["mrmg"] = "0067" ,
-  ["mrmh"] = "0068" ,
-  ["mrmi"] = "0069" ,
-  ["mrmj"] = "006A" ,
-  ["mrmk"] = "006B" ,
-  ["mrml"] = "006C" ,
-  ["mrmm"] = "006D" ,
-  ["mrmn"] = "006E" ,
-  ["mrmo"] = "006F" ,
-  ["mrmp"] = "0070" ,
-  ["mrmq"] = "0071" ,
-  ["mrmr"] = "0072" ,
-  ["mrms"] = "0073" ,
-  ["mrmt"] = "0074" ,
-  ["mrmu"] = "0075" ,
-  ["mrmv"] = "0076" ,
-  ["mrmw"] = "0077" ,
-  ["mrmx"] = "0078" ,
-  ["mrmy"] = "0079" ,
-  ["mrmz"] = "007A" ,
-  --
-  ["mitA"] = "1D434" ,
-  ["mitB"] = "1D435" ,
-  ["mitC"] = "1D436" ,
-  ["mitD"] = "1D437" ,
-  ["mitE"] = "1D438" ,
-  ["mitF"] = "1D439" ,
-  ["mitG"] = "1D43A" ,
-  ["mitH"] = "1D43B" ,
-  ["mitI"] = "1D43C" ,
-  ["mitJ"] = "1D43D" ,
-  ["mitK"] = "1D43E" ,
-  ["mitL"] = "1D43F" ,
-  ["mitM"] = "1D440" ,
-  ["mitN"] = "1D441" ,
-  ["mitO"] = "1D442" ,
-  ["mitP"] = "1D443" ,
-  ["mitQ"] = "1D444" ,
-  ["mitR"] = "1D445" ,
-  ["mitS"] = "1D446" ,
-  ["mitT"] = "1D447" ,
-  ["mitU"] = "1D448" ,
-  ["mitV"] = "1D449" ,
-  ["mitW"] = "1D44A" ,
-  ["mitX"] = "1D44B" ,
-  ["mitY"] = "1D44C" ,
-  ["mitZ"] = "1D44D" ,
-  ["mita"] = "1D44E" ,
-  ["mitb"] = "1D44F" ,
-  ["mitc"] = "1D450" ,
-  ["mitd"] = "1D451" ,
-  ["mite"] = "1D452" ,
-  ["mitf"] = "1D453" ,
-  ["mitg"] = "1D454" ,
-  ["mith"] = "0210E" ,
-  ["miti"] = "1D456" ,
-  ["mitj"] = "1D457" ,
-  ["mitk"] = "1D458" ,
-  ["mitl"] = "1D459" ,
-  ["mitm"] = "1D45A" ,
-  ["mitn"] = "1D45B" ,
-  ["mito"] = "1D45C" ,
-  ["mitp"] = "1D45D" ,
-  ["mitq"] = "1D45E" ,
-  ["mitr"] = "1D45F" ,
-  ["mits"] = "1D460" ,
-  ["mitt"] = "1D461" ,
-  ["mitu"] = "1D462" ,
-  ["mitv"] = "1D463" ,
-  ["mitw"] = "1D464" ,
-  ["mitx"] = "1D465" ,
-  ["mity"] = "1D466" ,
-  ["mitz"] = "1D467" ,
-  --
-  ["mbfA"] = "1D400" ,
-  ["mbfB"] = "1D401" ,
-  ["mbfC"] = "1D402" ,
-  ["mbfD"] = "1D403" ,
-  ["mbfE"] = "1D404" ,
-  ["mbfF"] = "1D405" ,
-  ["mbfG"] = "1D406" ,
-  ["mbfH"] = "1D407" ,
-  ["mbfI"] = "1D408" ,
-  ["mbfJ"] = "1D409" ,
-  ["mbfK"] = "1D40A" ,
-  ["mbfL"] = "1D40B" ,
-  ["mbfM"] = "1D40C" ,
-  ["mbfN"] = "1D40D" ,
-  ["mbfO"] = "1D40E" ,
-  ["mbfP"] = "1D40F" ,
-  ["mbfQ"] = "1D410" ,
-  ["mbfR"] = "1D411" ,
-  ["mbfS"] = "1D412" ,
-  ["mbfT"] = "1D413" ,
-  ["mbfU"] = "1D414" ,
-  ["mbfV"] = "1D415" ,
-  ["mbfW"] = "1D416" ,
-  ["mbfX"] = "1D417" ,
-  ["mbfY"] = "1D418" ,
-  ["mbfZ"] = "1D419" ,
-  ["mbfa"] = "1D41A" ,
-  ["mbfb"] = "1D41B" ,
-  ["mbfc"] = "1D41C" ,
-  ["mbfd"] = "1D41D" ,
-  ["mbfe"] = "1D41E" ,
-  ["mbff"] = "1D41F" ,
-  ["mbfg"] = "1D420" ,
-  ["mbfh"] = "1D421" ,
-  ["mbfi"] = "1D422" ,
-  ["mbfj"] = "1D423" ,
-  ["mbfk"] = "1D424" ,
-  ["mbfl"] = "1D425" ,
-  ["mbfm"] = "1D426" ,
-  ["mbfn"] = "1D427" ,
-  ["mbfo"] = "1D428" ,
-  ["mbfp"] = "1D429" ,
-  ["mbfq"] = "1D42A" ,
-  ["mbfr"] = "1D42B" ,
-  ["mbfs"] = "1D42C" ,
-  ["mbft"] = "1D42D" ,
-  ["mbfu"] = "1D42E" ,
-  ["mbfv"] = "1D42F" ,
-  ["mbfw"] = "1D430" ,
-  ["mbfx"] = "1D431" ,
-  ["mbfy"] = "1D432" ,
-  ["mbfz"] = "1D433" ,
-}
+--[[
+Start off with a definition for unicode glyph slot names.
+These need to be consistent because they're used programmatically.
+Note that we could have defined this in a more "nested"-like structure,
+but this would have made it less clear that we're talking about input
+and output characters here, not abstractions.
+--]]
+
+require('umath-glyph-names.lua')
 
 latin_upper = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'}
 latin_lower = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}
+
+--[[
+
+# Define the mappings
+
+Basically what we want here is to end up with a nested table structure that looks like
+
+math_map = {
+  ["italic"] = { ["mrmA"] = "mitA" , ["mrmB"] = "mrmB" , ... }
+  ["bold"]   = { ["mrmA"] = "mbfA" , ["mrmB"] = "mbfB" , ... }
+}
+
+So to do this we define:
+
+ * What the "name" of the math alphabet is ("italic", "bold", ...) (this is loop 1)
+ * What the "prefix" of it is ("mit", "mbf")
+ * What alphabets need to be included (this is loop 2)
+
+Each alphabet is defined in terms of a series of slot names (this is loop 3).
+
+This setup makes things nice and general, and we can define arbitrary alphabets as long as the
+glyph naming scheme is consistent. If the glyph names are NOT consistent, we need to augment
+the resulting structure manually. This is probably easier than making the construction code
+any more convoluted!
+
+--]]
 
 mathalph = {}
 mathalph.italic = { ["prefix"] = "mit" , ["alphlist"] = {latin_upper,latin_lower} }
@@ -784,10 +659,22 @@ math_map.boldsansitalic = {
     ["007A"] = "1D66F" , -- \mbfitsansz
 }
 
+--[[
 
+# Write the tables to file in appropriate ways
 
+Three files needed:
 
-local f = assert(io.open("mapping-math.lua", "w"))
+1. The Lua table mapping numeric glyph slots to glyph slots for each math alphabet.
+   Basically a slimmed down `serialise`.
+
+2. The XeTeX font mapping files.
+
+3. For convenience, a shell script for compiling the XeTeX font mapping files so XeTeX can read them.
+
+--]]
+
+local f = assert(io.open("umath-alphabet-mappings.lua", "w"))
 f:write("-- this file is automatically generated; do not edit","\n\n")
 f:write("math_maps = {","\n")
 for kk,vv in pairs(math_map) do
@@ -803,7 +690,6 @@ f:write('}','\n')
 f:close()
 
 teckit_prefix = "mapping_math_"
-
 for kk,vv in pairs(math_map) do
   local f = assert(io.open(teckit_prefix..kk..".map", "w"))
   f:write("LHSName \"ascii\"","\n","RHSName \"","unicode-maths-",kk,"\"","\n","pass(Unicode)","\n\n")

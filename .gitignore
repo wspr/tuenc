@@ -24,3 +24,5 @@ temp/
 # generated files:
 
 mapping-math.lua
+umath-alphabet-mappings.lua
+
