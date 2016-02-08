@@ -75,10 +75,10 @@ require('font-callback-mapping.lua')
     {}}\umath@tmpa
   \umath@scalecount=\numexpr\umath@scalecount+3\relax
   \ifdefined\directlua
-    \expandafter\gdef\csname 
+    \expandafter\gdef\csname
         \mathencodingdefault/\umath@family/\mathseriesdefault/\mathshapedefault+preloadhook%
       \endcsname{\umath@fonthook{#3}}
-  \fi  
+  \fi
 }
 
 \def\umath@paddednum#1{%
@@ -166,7 +166,7 @@ require('font-callback-mapping.lua')
     \endgroup
   \else
     \@latex@error{Symbol font ‘#3’ is not defined}\@eha
-\fi 
+\fi
 }
 
 
