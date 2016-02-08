@@ -19,7 +19,7 @@ greek_lower = {'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'the
   'iota', 'kappa', 'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma', 'tau',
   'upsilon', 'phi', 'chi', 'psi', 'omega'}
 
-greek_sym = {'varTheta','nabla','partial','varsigma','vartheta','varpi','varkappa','varrho','varepsilon'}
+greek_sym = {'varTheta','nabla','partial','varsigma','vartheta','varphi','varpi','varkappa','varrho','varepsilon'}
 
 num = {'zero','one','two','three','four','five','six','seven','eight','nine'}
 
