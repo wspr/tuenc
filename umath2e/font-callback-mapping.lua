@@ -9,9 +9,18 @@ function x_define_font(name,size,id)
   local thisfont=orig_define_font(name,size,id)
   this_mapping = math_maps[mathmapstr]
   if (this_mapping and type(thisfont)=='table') then
---    for k,v in pairs(thisfont) do
---      print(k)
---    end
+--[-[ # this is what's in the font:
+      io.write('\n\n')
+      for k,v in pairs(thisfont) do
+        if type(v) == 'table' then
+          local count = 0
+          for _ in pairs(v) do count = count + 1 end
+          io.write(k,' (( table, length ',count,'))\n')
+        else
+          print(k,' = "',v,'"',' (',type(v),')')
+        end
+      end io.write('\n\n')  ERROR()
+--]]
     for k,v in pairs(this_mapping) do
 	    thisfont.characters[k]=subst_glyph(thisfont,v)
 	  end
