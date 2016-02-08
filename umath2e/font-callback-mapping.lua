@@ -1,4 +1,5 @@
 
+-- require('serialise')
 require('math-map-gen.lua')
 require('umath-alphabet-mappings.lua')
 
@@ -24,7 +25,7 @@ function subst_glyph(font,slot)
   local char={}
   local entries = {"width","top_accent","italic","height","depth"}
 
-  -- serialise(font.characters[slot]) ERROR()
+  -- if slot > 0x10000 then  serialise(font.characters[slot]) ERROR()  end
   for i,v in pairs(entries) do
     char[v] = font.characters[slot][v]
   end
