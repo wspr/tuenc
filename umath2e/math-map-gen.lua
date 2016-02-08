@@ -1,114 +1,185 @@
 
-math_map = {
-  ["italic"] = {
-    ["0041"] = "1D434" , -- \mitA
-    ["0042"] = "1D435" , -- \mitB
-    ["0043"] = "1D436" , -- \mitC
-    ["0044"] = "1D437" , -- \mitD
-    ["0045"] = "1D438" , -- \mitE
-    ["0046"] = "1D439" , -- \mitF
-    ["0047"] = "1D43A" , -- \mitG
-    ["0048"] = "1D43B" , -- \mitH
-    ["0049"] = "1D43C" , -- \mitI
-    ["004A"] = "1D43D" , -- \mitJ
-    ["004B"] = "1D43E" , -- \mitK
-    ["004C"] = "1D43F" , -- \mitL
-    ["004D"] = "1D440" , -- \mitM
-    ["004E"] = "1D441" , -- \mitN
-    ["004F"] = "1D442" , -- \mitO
-    ["0050"] = "1D443" , -- \mitP
-    ["0051"] = "1D444" , -- \mitQ
-    ["0052"] = "1D445" , -- \mitR
-    ["0053"] = "1D446" , -- \mitS
-    ["0054"] = "1D447" , -- \mitT
-    ["0055"] = "1D448" , -- \mitU
-    ["0056"] = "1D449" , -- \mitV
-    ["0057"] = "1D44A" , -- \mitW
-    ["0058"] = "1D44B" , -- \mitX
-    ["0059"] = "1D44C" , -- \mitY
-    ["005A"] = "1D44D" , -- \mitZ
-    ["0061"] = "1D44E" , -- \mita
-    ["0062"] = "1D44F" , -- \mitb
-    ["0063"] = "1D450" , -- \mitc
-    ["0064"] = "1D451" , -- \mitd
-    ["0065"] = "1D452" , -- \mite
-    ["0066"] = "1D453" , -- \mitf
-    ["0067"] = "1D454" , -- \mitg
-    ["0068"] = "0210E" , -- \mith
-    ["0069"] = "1D456" , -- \miti
-    ["006A"] = "1D457" , -- \mitj
-    ["006B"] = "1D458" , -- \mitk
-    ["006C"] = "1D459" , -- \mitl
-    ["006D"] = "1D45A" , -- \mitm
-    ["006E"] = "1D45B" , -- \mitn
-    ["006F"] = "1D45C" , -- \mito
-    ["0070"] = "1D45D" , -- \mitp
-    ["0071"] = "1D45E" , -- \mitq
-    ["0072"] = "1D45F" , -- \mitr
-    ["0073"] = "1D460" , -- \mits
-    ["0074"] = "1D461" , -- \mitt
-    ["0075"] = "1D462" , -- \mitu
-    ["0076"] = "1D463" , -- \mitv
-    ["0077"] = "1D464" , -- \mitw
-    ["0078"] = "1D465" , -- \mitx
-    ["0079"] = "1D466" , -- \mity
-    ["007A"] = "1D467" , -- \mitz
-  },
-  ["bold"] = {
-    ["0041"] = "1D400" , -- \mbfA
-    ["0042"] = "1D401" , -- \mbfB
-    ["0043"] = "1D402" , -- \mbfC
-    ["0044"] = "1D403" , -- \mbfD
-    ["0045"] = "1D404" , -- \mbfE
-    ["0046"] = "1D405" , -- \mbfF
-    ["0047"] = "1D406" , -- \mbfG
-    ["0048"] = "1D407" , -- \mbfH
-    ["0049"] = "1D408" , -- \mbfI
-    ["004A"] = "1D409" , -- \mbfJ
-    ["004B"] = "1D40A" , -- \mbfK
-    ["004C"] = "1D40B" , -- \mbfL
-    ["004D"] = "1D40C" , -- \mbfM
-    ["004E"] = "1D40D" , -- \mbfN
-    ["004F"] = "1D40E" , -- \mbfO
-    ["0050"] = "1D40F" , -- \mbfP
-    ["0051"] = "1D410" , -- \mbfQ
-    ["0052"] = "1D411" , -- \mbfR
-    ["0053"] = "1D412" , -- \mbfS
-    ["0054"] = "1D413" , -- \mbfT
-    ["0055"] = "1D414" , -- \mbfU
-    ["0056"] = "1D415" , -- \mbfV
-    ["0057"] = "1D416" , -- \mbfW
-    ["0058"] = "1D417" , -- \mbfX
-    ["0059"] = "1D418" , -- \mbfY
-    ["005A"] = "1D419" , -- \mbfZ
-    ["0061"] = "1D41A" , -- \mbfa
-    ["0062"] = "1D41B" , -- \mbfb
-    ["0063"] = "1D41C" , -- \mbfc
-    ["0064"] = "1D41D" , -- \mbfd
-    ["0065"] = "1D41E" , -- \mbfe
-    ["0066"] = "1D41F" , -- \mbff
-    ["0067"] = "1D420" , -- \mbfg
-    ["0068"] = "1D421" , -- \mbfh
-    ["0069"] = "1D422" , -- \mbfi
-    ["006A"] = "1D423" , -- \mbfj
-    ["006B"] = "1D424" , -- \mbfk
-    ["006C"] = "1D425" , -- \mbfl
-    ["006D"] = "1D426" , -- \mbfm
-    ["006E"] = "1D427" , -- \mbfn
-    ["006F"] = "1D428" , -- \mbfo
-    ["0070"] = "1D429" , -- \mbfp
-    ["0071"] = "1D42A" , -- \mbfq
-    ["0072"] = "1D42B" , -- \mbfr
-    ["0073"] = "1D42C" , -- \mbfs
-    ["0074"] = "1D42D" , -- \mbft
-    ["0075"] = "1D42E" , -- \mbfu
-    ["0076"] = "1D42F" , -- \mbfv
-    ["0077"] = "1D430" , -- \mbfw
-    ["0078"] = "1D431" , -- \mbfx
-    ["0079"] = "1D432" , -- \mbfy
-    ["007A"] = "1D433" , -- \mbfz
-  },
-  ["bolditalic"] = {
+math_sym_names = {
+  ["mrmA"] = "0041" ,
+  ["mrmB"] = "0042" ,
+  ["mrmC"] = "0043" ,
+  ["mrmD"] = "0044" ,
+  ["mrmE"] = "0045" ,
+  ["mrmF"] = "0046" ,
+  ["mrmG"] = "0047" ,
+  ["mrmH"] = "0048" ,
+  ["mrmI"] = "0049" ,
+  ["mrmJ"] = "004A" ,
+  ["mrmK"] = "004B" ,
+  ["mrmL"] = "004C" ,
+  ["mrmM"] = "004D" ,
+  ["mrmN"] = "004E" ,
+  ["mrmO"] = "004F" ,
+  ["mrmP"] = "0050" ,
+  ["mrmQ"] = "0051" ,
+  ["mrmR"] = "0052" ,
+  ["mrmS"] = "0053" ,
+  ["mrmT"] = "0054" ,
+  ["mrmU"] = "0055" ,
+  ["mrmV"] = "0056" ,
+  ["mrmW"] = "0057" ,
+  ["mrmX"] = "0058" ,
+  ["mrmY"] = "0059" ,
+  ["mrmZ"] = "005A" ,
+  ["mrma"] = "0061" ,
+  ["mrmb"] = "0062" ,
+  ["mrmc"] = "0063" ,
+  ["mrmd"] = "0064" ,
+  ["mrme"] = "0065" ,
+  ["mrmf"] = "0066" ,
+  ["mrmg"] = "0067" ,
+  ["mrmh"] = "0068" ,
+  ["mrmi"] = "0069" ,
+  ["mrmj"] = "006A" ,
+  ["mrmk"] = "006B" ,
+  ["mrml"] = "006C" ,
+  ["mrmm"] = "006D" ,
+  ["mrmn"] = "006E" ,
+  ["mrmo"] = "006F" ,
+  ["mrmp"] = "0070" ,
+  ["mrmq"] = "0071" ,
+  ["mrmr"] = "0072" ,
+  ["mrms"] = "0073" ,
+  ["mrmt"] = "0074" ,
+  ["mrmu"] = "0075" ,
+  ["mrmv"] = "0076" ,
+  ["mrmw"] = "0077" ,
+  ["mrmx"] = "0078" ,
+  ["mrmy"] = "0079" ,
+  ["mrmz"] = "007A" ,
+  --
+  ["mitA"] = "1D434" ,
+  ["mitB"] = "1D435" ,
+  ["mitC"] = "1D436" ,
+  ["mitD"] = "1D437" ,
+  ["mitE"] = "1D438" ,
+  ["mitF"] = "1D439" ,
+  ["mitG"] = "1D43A" ,
+  ["mitH"] = "1D43B" ,
+  ["mitI"] = "1D43C" ,
+  ["mitJ"] = "1D43D" ,
+  ["mitK"] = "1D43E" ,
+  ["mitL"] = "1D43F" ,
+  ["mitM"] = "1D440" ,
+  ["mitN"] = "1D441" ,
+  ["mitO"] = "1D442" ,
+  ["mitP"] = "1D443" ,
+  ["mitQ"] = "1D444" ,
+  ["mitR"] = "1D445" ,
+  ["mitS"] = "1D446" ,
+  ["mitT"] = "1D447" ,
+  ["mitU"] = "1D448" ,
+  ["mitV"] = "1D449" ,
+  ["mitW"] = "1D44A" ,
+  ["mitX"] = "1D44B" ,
+  ["mitY"] = "1D44C" ,
+  ["mitZ"] = "1D44D" ,
+  ["mita"] = "1D44E" ,
+  ["mitb"] = "1D44F" ,
+  ["mitc"] = "1D450" ,
+  ["mitd"] = "1D451" ,
+  ["mite"] = "1D452" ,
+  ["mitf"] = "1D453" ,
+  ["mitg"] = "1D454" ,
+  ["mith"] = "0210E" ,
+  ["miti"] = "1D456" ,
+  ["mitj"] = "1D457" ,
+  ["mitk"] = "1D458" ,
+  ["mitl"] = "1D459" ,
+  ["mitm"] = "1D45A" ,
+  ["mitn"] = "1D45B" ,
+  ["mito"] = "1D45C" ,
+  ["mitp"] = "1D45D" ,
+  ["mitq"] = "1D45E" ,
+  ["mitr"] = "1D45F" ,
+  ["mits"] = "1D460" ,
+  ["mitt"] = "1D461" ,
+  ["mitu"] = "1D462" ,
+  ["mitv"] = "1D463" ,
+  ["mitw"] = "1D464" ,
+  ["mitx"] = "1D465" ,
+  ["mity"] = "1D466" ,
+  ["mitz"] = "1D467" ,
+  --
+  ["mbfA"] = "1D400" ,
+  ["mbfB"] = "1D401" ,
+  ["mbfC"] = "1D402" ,
+  ["mbfD"] = "1D403" ,
+  ["mbfE"] = "1D404" ,
+  ["mbfF"] = "1D405" ,
+  ["mbfG"] = "1D406" ,
+  ["mbfH"] = "1D407" ,
+  ["mbfI"] = "1D408" ,
+  ["mbfJ"] = "1D409" ,
+  ["mbfK"] = "1D40A" ,
+  ["mbfL"] = "1D40B" ,
+  ["mbfM"] = "1D40C" ,
+  ["mbfN"] = "1D40D" ,
+  ["mbfO"] = "1D40E" ,
+  ["mbfP"] = "1D40F" ,
+  ["mbfQ"] = "1D410" ,
+  ["mbfR"] = "1D411" ,
+  ["mbfS"] = "1D412" ,
+  ["mbfT"] = "1D413" ,
+  ["mbfU"] = "1D414" ,
+  ["mbfV"] = "1D415" ,
+  ["mbfW"] = "1D416" ,
+  ["mbfX"] = "1D417" ,
+  ["mbfY"] = "1D418" ,
+  ["mbfZ"] = "1D419" ,
+  ["mbfa"] = "1D41A" ,
+  ["mbfb"] = "1D41B" ,
+  ["mbfc"] = "1D41C" ,
+  ["mbfd"] = "1D41D" ,
+  ["mbfe"] = "1D41E" ,
+  ["mbff"] = "1D41F" ,
+  ["mbfg"] = "1D420" ,
+  ["mbfh"] = "1D421" ,
+  ["mbfi"] = "1D422" ,
+  ["mbfj"] = "1D423" ,
+  ["mbfk"] = "1D424" ,
+  ["mbfl"] = "1D425" ,
+  ["mbfm"] = "1D426" ,
+  ["mbfn"] = "1D427" ,
+  ["mbfo"] = "1D428" ,
+  ["mbfp"] = "1D429" ,
+  ["mbfq"] = "1D42A" ,
+  ["mbfr"] = "1D42B" ,
+  ["mbfs"] = "1D42C" ,
+  ["mbft"] = "1D42D" ,
+  ["mbfu"] = "1D42E" ,
+  ["mbfv"] = "1D42F" ,
+  ["mbfw"] = "1D430" ,
+  ["mbfx"] = "1D431" ,
+  ["mbfy"] = "1D432" ,
+  ["mbfz"] = "1D433" ,
+}
+
+latin_upper = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'}
+latin_lower = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}
+
+mathalph = {}
+mathalph.italic = { ["prefix"] = "mit" , ["alphlist"] = {latin_upper,latin_lower} }
+mathalph.bold   = { ["prefix"] = "mbf" , ["alphlist"] = {latin_upper,latin_lower} }
+
+math_map = {}
+input_prefix = 'mrm'
+
+for mathalph_name,thismathalph in pairs(mathalph) do
+  math_map[mathalph_name] = {}
+  for i,alphlist in pairs(thismathalph.alphlist) do
+    for ii,slotname in pairs(alphlist) do
+      math_map[mathalph_name][input_prefix..slotname] = thismathalph.prefix..slotname
+    end
+  end
+end
+
+math_map.bolditalic = {
     ["0041"] = "1D468" , -- \mbfitA
     ["0042"] = "1D469" , -- \mbfitB
     ["0043"] = "1D46A" , -- \mbfitC
@@ -161,8 +232,9 @@ math_map = {
     ["0078"] = "1D499" , -- \mbfitx
     ["0079"] = "1D49A" , -- \mbfity
     ["007A"] = "1D49B" , -- \mbfitz
-  },
-  ["scr"] = {
+  }
+
+math_map.scr = {
     ["0041"] = "1D49C" , -- \mscrA
     ["0042"] = "0212C" ,
     ["0043"] = "1D49E" , -- \mscrC
@@ -215,8 +287,9 @@ math_map = {
     ["0078"] = "1D4CD" , -- \mscrx
     ["0079"] = "1D4CE" , -- \mscry
     ["007A"] = "1D4CF" , -- \mscrz
-  },
-  ["boldscr"] = {
+  }
+
+math_map.boldscr = {
     ["0041"] = "1D4D0" , -- \mbfscrA
     ["0042"] = "1D4D1" , -- \mbfscrB
     ["0043"] = "1D4D2" , -- \mbfscrC
@@ -269,8 +342,9 @@ math_map = {
     ["0078"] = "1D501" , -- \mbfscrx
     ["0079"] = "1D502" , -- \mbfscry
     ["007A"] = "1D503" , -- \mbfscrz
-  },
-  ["frak"] = {
+}
+
+math_map.frak = {
     ["0041"] = "1D504" , -- \mfrakA
     ["0042"] = "1D505" , -- \mfrakB
     ["0043"] = "0212D" ,
@@ -323,8 +397,9 @@ math_map = {
     ["0078"] = "1D535" , -- \mfrakx
     ["0079"] = "1D536" , -- \mfraky
     ["007A"] = "1D537" , -- \mfrakz
-  },
-  ["boldfrak"] = {
+}
+
+math_map.boldfrak = {
     ["0041"] = "1D56C" , -- \mbffrakA
     ["0042"] = "1D56D" , -- \mbffrakB
     ["0043"] = "1D56E" , -- \mbffrakC
@@ -377,8 +452,9 @@ math_map = {
     ["0078"] = "1D59D" , -- \mbffrakx
     ["0079"] = "1D59E" , -- \mbffraky
     ["007A"] = "1D59F" , -- \mbffrakz
-  },
-  ["bb"] = {
+  }
+
+math_map.bb = {
     ["0041"] = "1D538" , -- \BbbA
     ["0042"] = "1D539" , -- \BbbB
     ["0043"] = "02102" ,
@@ -431,8 +507,9 @@ math_map = {
     ["0078"] = "1D569" , -- \Bbbx
     ["0079"] = "1D56A" , -- \Bbby
     ["007A"] = "1D56B" , -- \Bbbz
-  } ,
-  ["tt"] = {
+  }
+
+math_map.tt = {
     ["0041"] = "1D670" , -- \mttA
     ["0042"] = "1D671" , -- \mttB
     ["0043"] = "1D672" , -- \mttC
@@ -485,8 +562,9 @@ math_map = {
     ["0078"] = "1D6A1" , -- \mttx
     ["0079"] = "1D6A2" , -- \mtty
     ["007A"] = "1D6A3" , -- \mttz
-  } ,
-  ["sans"] = {
+  }
+
+math_map.sans = {
     ["0041"] = "1D5A0" , -- \msansA
     ["0042"] = "1D5A1" , -- \msansB
     ["0043"] = "1D5A2" , -- \msansC
@@ -539,8 +617,9 @@ math_map = {
     ["0078"] = "1D5D1" , -- \msansx
     ["0079"] = "1D5D2" , -- \msansy
     ["007A"] = "1D5D3" , -- \msansz
-  } ,
-  ["sansitalic"] = {
+  }
+
+math_map.sansitalic = {
     ["0041"] = "1D608" , -- \mitsansA
     ["0042"] = "1D609" , -- \mitsansB
     ["0043"] = "1D60A" , -- \mitsansC
@@ -593,8 +672,9 @@ math_map = {
     ["0078"] = "1D639" , -- \mitsansx
     ["0079"] = "1D63A" , -- \mitsansy
     ["007A"] = "1D63B" , -- \mitsansz
-  } ,
-  ["boldsans"] = {
+  }
+
+math_map.boldsans = {
     ["0041"] = "1D5D4" , -- \mbfsansA
     ["0042"] = "1D5D5" , -- \mbfsansB
     ["0043"] = "1D5D6" , -- \mbfsansC
@@ -647,8 +727,9 @@ math_map = {
     ["0078"] = "1D605" , -- \mbfsansx
     ["0079"] = "1D606" , -- \mbfsansy
     ["007A"] = "1D607" , -- \mbfsansz
-  } ,
-  ["boldsansitalic"] = {
+  }
+
+math_map.boldsansitalic = {
     ["0041"] = "1D63C" , -- \mbfitsansA
     ["0042"] = "1D63D" , -- \mbfitsansB
     ["0043"] = "1D63E" , -- \mbfitsansC
@@ -701,7 +782,6 @@ math_map = {
     ["0078"] = "1D66D" , -- \mbfitsansx
     ["0079"] = "1D66E" , -- \mbfitsansy
     ["007A"] = "1D66F" , -- \mbfitsansz
-  } ,
 }
 
 
@@ -713,7 +793,9 @@ f:write("math_maps = {","\n")
 for kk,vv in pairs(math_map) do
   f:write("  [\"",kk,"\"] = {","\n")
   for k,v in pairs(vv) do
-    f:write("    [0x",k,"] = 0x",v," ,","\n")
+    slot = math_sym_names[k] or k
+    val  = math_sym_names[v] or v
+    f:write("    [0x",slot,"] = 0x",val," ,","\n")
   end
   f:write("  },","\n")
 end
@@ -726,7 +808,9 @@ for kk,vv in pairs(math_map) do
   local f = assert(io.open(teckit_prefix..kk..".map", "w"))
   f:write("LHSName \"ascii\"","\n","RHSName \"","unicode-maths-",kk,"\"","\n","pass(Unicode)","\n\n")
   for k,v in pairs(vv) do
-    f:write("U+",k," <> U+",v," ;\n")
+    slot = math_sym_names[k] or k
+    val  = math_sym_names[v] or v
+    f:write("U+",slot," <> U+",val," ;\n")
   end
   f:close()
 end
