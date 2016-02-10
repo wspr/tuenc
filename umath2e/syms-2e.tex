@@ -109,7 +109,7 @@
 
 \AtEndDocument{
 \typeout{LaTeX2e MATH DEFINITIONS}
-\directlua{serialize(latex_math)}
+\directlua{serialise(latex_math)}
 }
 
 \begingroup
@@ -131,21 +131,21 @@ local f = assert(io.open("syms-2e-unicode.tex", "w"))
 f:write("\n")
 for k,v in pairs(latex_math) do
   if ( v.type == "symbol") and v.USV then
-    f:write("\\DeclareMathSymbol{",k,"}")
+    f:write("\\uDeclareMathSymbol{",k,"}")
     f:write("{",v.class,"}")
     f:write("{",v.fam,"}")
     f:write("{",v.USV,"}")
     f:write("\n")
   end
   if ( v.type == "delimiter") and v.USV then
-    f:write("\\DeclareMathDelimiter{",k,"}")
+    f:write("\\uDeclareMathDelimiter{",k,"}")
     f:write("{",v.class,"}")
     f:write("{",v.fam[1],"}")
     f:write("{",v.USV,"}")
     f:write("\n")
   end
   if ( v.type == "radical") and v.USV then
-    f:write("\\DeclareMathRadical{",k,"}")
+    f:write("\\uDeclareMathRadical{",k,"}")
     f:write("{",v.class,"}")
     f:write("{",v.fam[1],"}")
     f:write("{",v.USV,"}")
@@ -157,21 +157,21 @@ f:write("\n\\endinput\n")
 f:write("\n")
 for k,v in pairs(latex_math) do
   if ( v.type == "symbol") and not(v.USV) then
-    f:write("\\DeclareMathSymbol{",k,"}")
+    f:write("\\uDeclareMathSymbol{",k,"}")
     f:write("{...}")
     f:write("{...}")
     f:write("{...}")
     f:write("\n")
   end
   if ( v.type == "delimiter") and not(v.USV) then
-    f:write("\\DeclareMathDelimiter{",k,"}")
+    f:write("\\uDeclareMathDelimiter{",k,"}")
     f:write("{...}")
     f:write("{...}")
     f:write("{...}")
     f:write("\n")
   end
   if ( v.type == "radical") and not(v.USV) then
-    f:write("\\DeclareMathRadical{",k,"}")
+    f:write("\\uDeclareMathRadical{",k,"}")
     f:write("{...}")
     f:write("{...}")
     f:write("{...}")

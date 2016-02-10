@@ -9,7 +9,7 @@ function x_define_font(name,size,id)
   local thisfont=orig_define_font(name,size,id)
   this_mapping = math_maps[mathmapstr]
   if (this_mapping and type(thisfont)=='table') then
---[-[ # this is what's in the font:
+--[[ # this is what's in the font:
       io.write('\n\n')
       for k,v in pairs(thisfont) do
         if type(v) == 'table' then
