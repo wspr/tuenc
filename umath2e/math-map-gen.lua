@@ -7,7 +7,7 @@ but this would have made it less clear that we're talking about input
 and output characters here, not abstractions.
 --]]
 
-require('umath-glyph-names.lua')
+dofile('umath-glyph-names.lua')
 
 latin_upper = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'}
 latin_lower = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}
@@ -109,7 +109,8 @@ f:close()
 
 teckit_prefix = "mapping_math_"
 for kk,vv in pairs(math_map) do
-  local f = assert(io.open(teckit_prefix..kk..".map", "w"))
+  tecmapname = teckit_prefix..kk
+  local f = assert(io.open(tecmapname..".map", "w"))
   f:write("LHSName \"ascii\"","\n","RHSName \"","unicode-maths-",kk,"\"","\n","pass(Unicode)","\n\n")
   for k,v in pairs(vv) do
     slot = math_sym_names[k] or k
@@ -117,11 +118,6 @@ for kk,vv in pairs(math_map) do
     f:write("U+",slot," <> U+",val," ;\n")
   end
   f:close()
+  os.execute("teckit_compile " .. tecmapname .. "\n")
 end
 
-local f = assert(io.open("teckit_compile_mappings.sh", "w"))
-f:write("#!/bin/sh","\n\n")
-for kk,vv in pairs(math_map) do
-  f:write("teckit_compile ",teckit_prefix,kk,"\n")
-end
-f:close()
