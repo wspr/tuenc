@@ -20,6 +20,7 @@ yes
 *.zip
 
 temp/
+build/
 
 # generated files:
 

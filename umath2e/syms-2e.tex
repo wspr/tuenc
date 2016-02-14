@@ -3,7 +3,6 @@
 \begin{document}
 
 \begin{luacode*}
-  require('serialise.lua')
   latex_math = {}
 \end{luacode*}
 
@@ -107,10 +106,6 @@
 }
 
 
-\AtEndDocument{
-\typeout{LaTeX2e MATH DEFINITIONS}
-\directlua{serialise(latex_math)}
-}
 
 \begingroup
 

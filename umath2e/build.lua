@@ -2,9 +2,15 @@
 
 -- Identify the module
 module = "umath2e"
+print("Build script for "..module)
 
-unpackfiles = {"math-map-gen.lua"}
+sourcefiles = {"*.dtx","*.ins","*.lua"}
+unpackfiles = {"*.ins"}
+installfiles = {"*.lua","*.sty"}
+unpackexe = "luatex"
 
+-- Split off from the main unpack so it can be used on a bundle and not
+-- leave only one modules files
 bundleunpack = bundleunpack or function(sourcedir)
   local errorlevel = mkdir(localdir)
   if errorlevel ~=0 then
@@ -28,28 +34,26 @@ bundleunpack = bundleunpack or function(sourcedir)
       return errorlevel
     end
   end
-  errorlevel = unpackfunc(localdir,unpackdir)
-  if errorlevel ~=0 then
-    return errorlevel
+  for _,i in ipairs(unpackfiles) do
+    for _,j in ipairs(filelist(unpackdir, i)) do
+      print("Unpacking "..j)
+      errorlevel = unpackfunc(j)
+      if errorlevel ~=0 then
+        return errorlevel
+      end
+    end
   end
   return 0
 end
 
-function unpackfunc(localdir,unpackdir)
-
+function unpackfunc(j)
   local localdir = relpath(localdir, unpackdir)
-
-  print("Generating XeTeX and LuaTeX mapping files...")
-  print(unpackdir)
-  errorlevel = run(unpackdir,"texlua math-map-gen.lua")
-  if errorlevel ~=0 then return errorlevel end
-
-
-  print("Generating unicode symbol definitions...")
-  errorlevel = run(unpackdir,"lualatex syms-2e.tex")
-  if errorlevel ~=0 then return errorlevel end
-
-  return 0
+  local runcmd = os_setenv .. " TEXINPUTS=." .. os_pathsep
+      .. localdir .. (unpacksearch and os_pathsep or "") ..
+    os_concat ..
+    unpackexe .. " " .. unpackopts .. " " .. j .. (optquiet and (" > " .. os_null) or "")
+  errorlevel = run( unpackdir, runcmd  )
+  return errorlevel
 end
 
 -- Release a TDS-style zip
